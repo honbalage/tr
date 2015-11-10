@@ -1,0 +1,7 @@
+*.class
+target
+*.vpp~*
+*.vpp.working
+*.project
+*.settings
+
