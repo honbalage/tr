@@ -23,6 +23,8 @@ def liveStream(command):
 def argumentsOf(argv):
   parser = ArgumentParser( description='Command Line lifecycle management script for Test Reporter.' )
   parser.add_argument( '-t', '--target', type=str, default='testReporter' )
+  parser.add_argument( '--clean', action='store_true' )
+  parser.add_argument( '--build', action='store_true' )
   parser.add_argument( '--config-file', type=str, default='./etc/env/trun.json' \
                       ,metavar='FILE-PATH' )
   return parser.parse_args( argv )
@@ -35,9 +37,13 @@ def configOf(args):
 
 
 def makeNonExistentJar(args, config):
+  jar_path = '../target/%s-jar-with-dependencies.jar' % args.target
+  if args.clean:
+    liveStream([ 'rm', '-f', jar_path ])
+
   maven = [ 'mvn', 'compile', 'assembly:single' ]
   liveStream( maven )
-  return ('../target/%s-jar-with-dependencies.jar' % args.target)
+  return jar_path
 
 
 def runInJVM(jar, config):
@@ -49,7 +55,9 @@ def main(argc, argv):
   args = argumentsOf(argv[ 1: ])
   config = configOf( args )
   jar_path = makeNonExistentJar( args, config ) 
-  runInJVM( jar_path, config )
+  if not( args.build ):
+    runInJVM( jar_path, config )
+
 
 if __name__=='__main__':
   argv = sys.argv
