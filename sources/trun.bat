@@ -1,3 +1,3 @@
 
-python trun (%*)
+python trun.py (%*)
 

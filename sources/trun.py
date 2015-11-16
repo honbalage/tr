@@ -1,4 +1,3 @@
-
 #
 # trun
 from argparse import ArgumentParser
@@ -17,7 +16,7 @@ def liveStream(command):
     if ln: print ln.strip()
   retval = proc.poll( )
   if retval != 0:
-    print '[error]: %s returned non-zero exit status -- %s' % (' '.join(command), retval)
+    print '[ERROR]: %s returned non-zero exit status -- %s' % (' '.join(command), retval)
  
 
 def argumentsOf(argv):
@@ -39,7 +38,8 @@ def configOf(args):
 def makeNonExistentJar(args, config):
   jar_path = '../target/%s-jar-with-dependencies.jar' % args.target
   if args.clean:
-    liveStream([ 'rm', '-f', jar_path ])
+    print '[INFO] Cleaining \'%s\'' % jar_path
+    os.remove( jar_path )
 
   maven = [ 'mvn', 'compile', 'assembly:single' ]
   liveStream( maven )

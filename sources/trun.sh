@@ -1,3 +1,3 @@
 #!/bin/bash
-python trun $*
+python trun.py $*
 
