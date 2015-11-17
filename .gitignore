@@ -5,4 +5,5 @@ target
 *.project
 *.settings
 *.swp
-
+*.classpath
+*trun

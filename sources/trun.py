@@ -8,6 +8,9 @@ import sys
 import os
 
 
+_targetdir = 'target'
+_runnable_jar_home = '%s/bin' % _targetdir
+
 def liveStream(command):
   proc = sp.Popen( command, stdout=sp.PIPE )
   while True:
@@ -36,7 +39,7 @@ def configOf(args):
 
 
 def makeNonExistentJar(args, config):
-  jar_path = '../target/%s-jar-with-dependencies.jar' % args.target
+  jar_path = ('%s/%s-x.jar' % ( _runnable_jar_home, args.target ))
   if args.clean:
     print '[INFO] Cleaining \'%s\'' % jar_path
     os.remove( jar_path )
