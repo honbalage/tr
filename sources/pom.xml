@@ -22,7 +22,7 @@
           <configuration>
               <archive>
                 <manifest>
-                  <mainClass>org.crf.rt.application.Application</mainClass>
+                  <mainClass>org.crf.tr.application.Application</mainClass>
                 </manifest>
               </archive>
               <descriptorRefs>
