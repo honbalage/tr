@@ -5,6 +5,8 @@ package org.crf.tr;
 
 import static java.lang.System.out;
 
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.input.KeyCombination;
 import javafx.application.Application;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.MenuItem;
@@ -29,23 +31,40 @@ public final class TestReporter extends Application {
 	}
 
 
-	static final Menu makeFileMenu() {
+	final Menu makeFileMenu() {
 		final Menu file = new Menu( "File" );
-	    final MenuItem exit = new MenuItem( "Exit" );
+		final MenuItem open = new MenuItem( "Open" );
+		open.setOnAction( evt -> {
+			// TODONE: call file chooser && results opener
+			out.println( "Test Results opened.." );
+		});
+		open.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+O" ));
+		
+		final MenuItem archive = new MenuItem( "Archive" );
+		archive.setOnAction( evt -> {
+			// TODONE: store to DB
+			out.println( "Test Results saved to db.." );
+		});
+		archive.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+S" ));
+	    
+		final MenuItem exit = new MenuItem( "Exit" );
 	    exit.setOnAction( evt -> {
 	    	// TODONE: setup callbacks..
 	    	System.exit( 0 );
 	    });
+	    exit.setAccelerator(KeyCombination.keyCombination( "Ctrl+Q" ));
+	    file.getItems().addAll( open, archive, new SeparatorMenuItem(), exit );
 		return file;
 	}
 
-	static final Menu makeRunMenu() {
+	final Menu makeRunMenu() {
 		final Menu run = new Menu( "Run" );
 		final MenuItem shellCommand = new MenuItem( "Shell Command" );
 		shellCommand.setOnAction( evt -> {
-			// TODONE: use orf.crf.tr.commands.Executor
+			// TODONE: open dialog window..
 			out.println( "Executed in shell..." );
 		});
+		shellCommand.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+R" ));
 
 		run.getItems().addAll( shellCommand );
 		return run;
@@ -53,7 +72,7 @@ public final class TestReporter extends Application {
 	
 	/**
 	 * */
-	static final MenuBar makeMenuBar() {
+	final MenuBar makeMenuBar() {
 		final MenuBar menuBar = new MenuBar( );
 		final Menu fileMenu = makeFileMenu( );
 		final Menu runMenu = makeRunMenu( );
