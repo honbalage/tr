@@ -22,7 +22,7 @@
           <configuration>
               <archive>
                 <manifest>
-                  <mainClass>org.crf.tr.application.Application</mainClass>
+                  <mainClass>org.crf.tr.TestReporter</mainClass>
                 </manifest>
               </archive>
               <descriptorRefs>
@@ -52,6 +52,16 @@
               <target>${java.version}</target>
           </configuration>
         </plugin>
+
+        <plugin>
+          <groupId>com.zenjava</groupId>
+          <artifactId>javafx-maven-plugin</artifactId>
+          <version>8.1.2</version>
+          <configuration>
+            <mainClass>org.crf.tr.TestReporter</mainClass>
+            <nativeInstallers />
+          </configuration>
+        </plugin>
     </plugins>
   </build>
 
@@ -63,6 +73,7 @@
       <scope>test</scope>
     </dependency>
 
+<!--
     <dependency>
       <groupId>com.oracle</groupId>
       <artifactId>javafx</artifactId>
@@ -70,5 +81,7 @@
       <systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
       <scope>system</scope>
     </dependency>
+-->
   </dependencies>
 </project>
+
