@@ -14,7 +14,6 @@ import javafx.scene.Scene;
  * @author cvirtue
  * @version "%I, %G"
  */
-@SuppressWarnings( "restriction" )
 public final class TestReporter extends Application {
 
 	/**

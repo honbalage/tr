@@ -8,6 +8,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.Dialog;
 import static java.lang.System.out;
 import javafx.scene.control.Menu;
 
@@ -19,7 +20,6 @@ import org.crf.tr.TestReporter;
  * @author cvirtue
  * @version "%I, %G"
  */
-@SuppressWarnings( "restriction" )
 public final class MenuBarFactory {
 
 	static final Menu makeFileMenuFor(final TestReporter owner) {
@@ -52,8 +52,8 @@ public final class MenuBarFactory {
 		final Menu run = new Menu( "Run" );
 		final MenuItem shellCommand = new MenuItem( "Shell Command" );
 		shellCommand.setOnAction( evt -> {
-			// TODONE: open dialog window..
-			out.println( "Executed in shell..." );
+			final Dialog<String> shellDialog = DialogFactory.makeShellFor( owner );
+		    shellDialog.show( );
 		});
 		shellCommand.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+R" ));
 
