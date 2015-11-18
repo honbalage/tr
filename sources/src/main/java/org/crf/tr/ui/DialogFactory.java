@@ -4,11 +4,9 @@
 package org.crf.tr.ui;
 
 import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
@@ -29,9 +27,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 
-import org.crf.tr.TestReporter;
-
 import javafx.stage.FileChooser;
+import org.crf.tr.TestReporter;
 import javafx.stage.Modality;
 import javafx.scene.Node;
 
@@ -129,32 +126,22 @@ public final class DialogFactory {
 		browse.setOnAction( evt -> {
 			final File f = _fileChooser.showOpenDialog(owner.primary( ));
 			if( f == null ) return;
+
 			final StringBuilder builder = new StringBuilder( );
-			try (final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream( f )))) {
-	
-				String line;
-				while ((line = reader.readLine()) != null) {
-					builder.append( line );
-					builder.append( " " );
-				}
-				argsField.setText(builder.toString( ));
-			} catch( final FileNotFoundException e ) {
+			try {
+			    Files.readAllLines(Paths.get(f.getAbsolutePath())).forEach( l -> {
+			    	builder.append( l );
+			    	builder.append( " " );
+			    });
+			    argsField.setText(builder.toString( ));
+			} catch( final IOException e ) {
 				handle( e, f );
-			} catch( final IOException ex ) {
-				handle( ex, f );
 			}
 		});
 		browse.setPrefWidth( 77 );
 		return browse;
 	}
 	
-	static final void handle(final FileNotFoundException e, final File f) {
-		final Alert alert = new Alert( AlertType.ERROR, "File Not Found" );
-		alert.setTitle( "File Not Found" );
-		alert.setHeaderText("Unable to locate file: " + f.getAbsolutePath());
-		alert.show( );
-	}
-
 	static final void handle(final IOException e, final File f) {
 		final Alert alert = new Alert( AlertType.ERROR, "IO Error" );
 		alert.setTitle( "IO Error" );
