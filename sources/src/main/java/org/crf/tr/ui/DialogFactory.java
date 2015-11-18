@@ -3,15 +3,21 @@
  */
 package org.crf.tr.ui;
 
-import javafx.scene.layout.ColumnConstraints;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
@@ -19,13 +25,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 
 import org.crf.tr.TestReporter;
 
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.scene.Node;
 
@@ -37,6 +43,8 @@ import javafx.scene.Node;
  */
 public final class DialogFactory {
 
+	private static final FileChooser _fileChooser = new FileChooser( );
+	
 	public static final Dialog<String> makeShellFor(final TestReporter owner) {
 		final Dialog<String> shellDialog = new Dialog<>( );
 		shellDialog.setTitle( "Shell Command Input" );
@@ -48,7 +56,7 @@ public final class DialogFactory {
 		final TextField argsField = makeCommandField( owner );		
 		final TextArea outputArea = makeOutputArea( owner );
 
-		final Pane commandPane = makeCommandPane( commandField, argsField, outputArea );
+		final Pane commandPane = makeCommandPane( owner, commandField, argsField, outputArea );
 		shellDialog.getDialogPane().setContent( commandPane );
 
 		final ButtonType exec = new ButtonType( "Execute", ButtonData.OK_DONE );
@@ -66,6 +74,7 @@ public final class DialogFactory {
 				final String command = CommandConstraints.handleEmpty( commandField, evt );
 				final String args = argsField.getText( );
 				// TODONE: execute command and args..
+				evt.consume( );
 			}
 		});
 		return shellDialog;
@@ -97,30 +106,77 @@ public final class DialogFactory {
 	
 	static final TextField makeCommandField(final TestReporter owner) {
 		final TextField field = new TextField( );
-		field.setPrefWidth( 450 );
+		field.setPrefWidth( 310 );
 		GridPane.setHgrow( field, Priority.ALWAYS );
 		GridPane.setFillWidth( field, true );
 		GridPane.setHalignment( field , HPos.LEFT );
 		return field;
 	}
 
-	static final Pane makeCommandPane(final Node... nodes) {
+	static final Button makeCommandBrowserButton(final TextField commandField, final TestReporter owner) {
+		final Button browse = new Button( "Browse" );
+		browse.setOnAction( evt -> {
+			final File f = _fileChooser.showOpenDialog(owner.primary( ));
+			if( f == null ) return;
+			commandField.setText(f.getAbsolutePath( ));
+		});
+		browse.setPrefWidth( 77 );
+		return browse;
+	}
+	
+	static final Button makeArgsBrowserButton(final TextField argsField, final TestReporter owner) {
+		final Button browse = new Button( "Browse" );
+		browse.setOnAction( evt -> {
+			final File f = _fileChooser.showOpenDialog(owner.primary( ));
+			if( f == null ) return;
+			final StringBuilder builder = new StringBuilder( );
+			try (final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream( f )))) {
+	
+				String line;
+				while ((line = reader.readLine()) != null) {
+					builder.append( line );
+					builder.append( " " );
+				}
+				argsField.setText(builder.toString( ));
+			} catch( final FileNotFoundException e ) {
+				handle( e, f );
+			} catch( final IOException ex ) {
+				handle( ex, f );
+			}
+		});
+		browse.setPrefWidth( 77 );
+		return browse;
+	}
+	
+	static final void handle(final FileNotFoundException e, final File f) {
+		final Alert alert = new Alert( AlertType.ERROR, "File Not Found" );
+		alert.setTitle( "File Not Found" );
+		alert.setHeaderText("Unable to locate file: " + f.getAbsolutePath());
+		alert.show( );
+	}
+
+	static final void handle(final IOException e, final File f) {
+		final Alert alert = new Alert( AlertType.ERROR, "IO Error" );
+		alert.setTitle( "IO Error" );
+		alert.setHeaderText( "Message: " + e.getMessage() );
+		alert.setContentText("While reading from: " + f.getAbsolutePath());
+		alert.show( );
+	}
+
+	static final Pane makeCommandPane(final TestReporter owner, final Node... nodes) {
 		final GridPane grid = new GridPane( );
 		grid.setVgap( 3.1 );
-		
-		final ColumnConstraints col1 = new ColumnConstraints( );
-		final ColumnConstraints col2 = new ColumnConstraints( );
-		col2.setHgrow( Priority.ALWAYS );
-		grid.getColumnConstraints().add( 0, col1 );
-		grid.getColumnConstraints().add( 1, col2 );
-		
+		grid.setHgap( 3.1 );
+
 		final Label commandLabel = new Label( "Command: " );
 		final Label argsLabel = new Label( "Arguments: " );		
 		
 		grid.add( commandLabel, 1, 1 );
 		grid.add( nodes[0], 2, 1 );
+		grid.add( makeCommandBrowserButton((TextField) nodes[0], owner ), 3, 1 );
 		grid.add( argsLabel, 1, 2 );
 		grid.add( nodes[1], 2, 2 );
+		grid.add( makeArgsBrowserButton((TextField) nodes[1], owner ), 3, 2 );
 		
 		final VBox commandPane = new VBox( );
 		commandPane.setSpacing( 6.3 );

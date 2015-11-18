@@ -56,10 +56,17 @@ public final class TestReporter extends Application {
 	 * */
 	@Override
 	public final void start(final Stage primary) {
+		this._primary = primary;
 		final BorderPane main = new BorderPane( );
 		main.setTop(MenuBarFactory.makeFor( this ));
 		
 		primary.setScene(new Scene( main, 1024, 768 ));
 		primary.show( );
 	}
+
+	public final Stage primary() {
+		return this._primary;
+	}
+
+	private Stage _primary;
 }
