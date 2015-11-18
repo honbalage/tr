@@ -37,6 +37,7 @@ import javafx.stage.FileChooser;
 import java.util.stream.Collectors;
 
 import org.crf.tr.TestReporter;
+import org.crf.tr.commands.Executor;
 
 import javafx.stage.Modality;
 import javafx.scene.Node;
@@ -84,36 +85,31 @@ public final class DialogFactory {
 						                           .filter(s -> !s.trim().isEmpty( ))
 						                           .collect(Collectors.toList( ));
                 command.add( 0, cmd );
-		        // TODONE: pry logic out to Executor
-				final ProcessBuilder pb = new ProcessBuilder( command );
-				pb.redirectErrorStream( true );
-				try {
-					final Process p = pb.start( );
-					final InputStream stdout = p.getInputStream();
-					try (final BufferedReader reader = new BufferedReader(new InputStreamReader( stdout ))) {
-						String line;
-						while ((line = reader.readLine()) != null) {
-							outputArea.appendText( line );
-							outputArea.appendText( "\n" );
-						}
-					}
-					
-					if (handleExitValue( p ) == 0) {
-						outputArea.appendText( "\n\n" );
-						outputArea.appendText( "----------------------------------\n" );
-						outputArea.appendText( "Test Reporter: SUCCESS" );
-					}
-				} catch (Exception e) {
-					handle( e, "command execution" );
-				}
+		        final int exitStatus = Executor.inShell( command, p -> {
+		        	final InputStream stdout = p.getInputStream();
+		        	readAllInto( outputArea, stdout );
+		        });
+		        handleNonZero( exitStatus );
 				evt.consume( );
 			}
 		});
 		return shellDialog;
 	}
 
-	static final int handleExitValue(final Process proc) {
-		final int exitStatus = proc.exitValue( );
+	static final void readAllInto(final TextArea out, final InputStream stdout) {
+		try (final BufferedReader reader = new BufferedReader(new InputStreamReader( stdout ))){
+			
+			String line;
+			while ((line = reader.readLine()) != null) {
+				out.appendText( line );
+				out.appendText( "\n" );
+			}
+		} catch( final IOException e ) {
+			handle( e, "reading from command output" );
+		}
+	}
+	
+	static final void handleNonZero(final int exitStatus) {
 		if( exitStatus != 0 ) {
 			final Alert alert = new Alert( AlertType.ERROR, "Non Zero Exit Status" );
 			alert.setTitle( "Non Zero Exit Status" );
@@ -121,7 +117,6 @@ public final class DialogFactory {
 			alert.setContentText( "Please see output log." );
 			alert.show( );
 		}
-		return exitStatus;
 	}
 	
 	static final void handle(final Exception e, final String location) {
