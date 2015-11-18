@@ -3,10 +3,16 @@
  */
 package org.crf.tr.ui;
 
+import static java.lang.String.format;
+
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
@@ -26,11 +32,16 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
-
 import javafx.stage.FileChooser;
+
+import java.util.stream.Collectors;
+
 import org.crf.tr.TestReporter;
+
 import javafx.stage.Modality;
 import javafx.scene.Node;
+
+import java.util.Arrays;
 
 
 /**
@@ -68,15 +79,59 @@ public final class DialogFactory {
 		final Node execButton = shellDialog.getDialogPane().lookupButton( exec );
 		execButton.addEventFilter(EventType.ROOT, evt -> {
 			if( evt.getEventType().equals( ActionEvent.ACTION )) {
-				final String command = CommandConstraints.handleEmpty( commandField, evt );
-				final String args = argsField.getText( );
-				// TODONE: execute command and args..
+				final String cmd = CommandConstraints.handleEmpty( commandField, evt );
+				final List<String> command = Arrays.stream(argsField.getText().split( " " ))
+						                           .filter(s -> !s.trim().isEmpty( ))
+						                           .collect(Collectors.toList( ));
+                command.add( 0, cmd );
+		        // TODONE: pry logic out to Executor
+				final ProcessBuilder pb = new ProcessBuilder( command );
+				pb.redirectErrorStream( true );
+				try {
+					final Process p = pb.start( );
+					final InputStream stdout = p.getInputStream();
+					try (final BufferedReader reader = new BufferedReader(new InputStreamReader( stdout ))) {
+						String line;
+						while ((line = reader.readLine()) != null) {
+							outputArea.appendText( line );
+							outputArea.appendText( "\n" );
+						}
+					}
+					
+					if (handleExitValue( p ) == 0) {
+						outputArea.appendText( "\n\n" );
+						outputArea.appendText( "----------------------------------\n" );
+						outputArea.appendText( "Test Reporter: SUCCESS" );
+					}
+				} catch (Exception e) {
+					handle( e, "command execution" );
+				}
 				evt.consume( );
 			}
 		});
 		return shellDialog;
 	}
+
+	static final int handleExitValue(final Process proc) {
+		final int exitStatus = proc.exitValue( );
+		if( exitStatus != 0 ) {
+			final Alert alert = new Alert( AlertType.ERROR, "Non Zero Exit Status" );
+			alert.setTitle( "Non Zero Exit Status" );
+			alert.setHeaderText( "Process returned non-zero exit status." );
+			alert.setContentText( "Please see output log." );
+			alert.show( );
+		}
+		return exitStatus;
+	}
 	
+	static final void handle(final Exception e, final String location) {
+		final Alert alert = new Alert( AlertType.ERROR, "General Error" );
+		alert.setTitle( "General Error" );
+		alert.setHeaderText(format( "Error in %s.", location ));
+		alert.setContentText( "Message: " + e.getMessage() );
+		alert.show( );
+	}
+
 	static final class CommandConstraints {
 		static final String handleEmpty(final TextField commandField, final Event evt) {
 			final String command = commandField.getText().trim();

@@ -60,6 +60,7 @@ public final class TestReporter extends Application {
 		final BorderPane main = new BorderPane( );
 		main.setTop(MenuBarFactory.makeFor( this ));
 		
+		primary.setTitle( "Test Reporter" );
 		primary.setScene(new Scene( main, 1024, 768 ));
 		primary.show( );
 	}
