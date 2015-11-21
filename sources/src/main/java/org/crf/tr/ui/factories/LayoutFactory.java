@@ -25,7 +25,7 @@ public final class LayoutFactory {
 		final VBox center = new VBox( );
 		center.getChildren().add( 0, ProjectHeader.makeDefaultFor( owner ));
 		
-		final Image image = new Image( "file:src/main/resources/images/empty-5.jpg", owner.width(), owner.height(), false, true );
+		final Image image = new Image( "file:src/main/resources/images/default-bcg.jpg", owner.width(), owner.height(), false, true );
 		final BackgroundImage bcgImage = new BackgroundImage( image
 				                                             ,BackgroundRepeat.REPEAT
 				                                             ,BackgroundRepeat.NO_REPEAT

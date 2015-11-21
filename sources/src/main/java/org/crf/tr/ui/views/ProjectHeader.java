@@ -11,8 +11,11 @@ import org.crf.tr.model.Project;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import static java.lang.String.format;
 
 /**
  *
@@ -30,11 +33,14 @@ public final class ProjectHeader extends HBox implements Viewable {
 		final VBox center = owner.center();
 
 		final ProjectHeader header = new ProjectHeader();
-		header.setPadding(new Insets( 15, 12, 15, 12 ));
+		header.setPadding(new Insets( 7, 6, 7, 6 ));
 		header.setSpacing( 13 );
 		header.setStyle( "-fx-background-color: #336699;" );
-		header.getChildren().add( 0, makeStyledLabel( "Project:" ));
-		header.getChildren().add( 1, makeStyledLabel(project.toString( ), "-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 16;" ));
+		final Image jlogo = new Image( "file:src/main/resources/images/proj-icon.png", 42, 42, false, true );
+		final ImageView jenkins = new ImageView( jlogo );
+		header.getChildren().add( 0, jenkins );
+		header.getChildren().add( 1, makeStyledLabel(project.name( ), "-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 31;" ));
+		header.getChildren().add( 2, makeStyledLabel(format( "[%s]", project.framework().toString( )), "-fx-text-fill: #ffffff; -fx-font-size: 31;"));
 
 		final List<Node> items = center.getChildren();
 		if (items.isEmpty())

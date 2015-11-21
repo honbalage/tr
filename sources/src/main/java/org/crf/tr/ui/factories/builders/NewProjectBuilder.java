@@ -38,7 +38,6 @@ public final class NewProjectBuilder {
 		final Dialog<Project> dialog = new Dialog<>( );
 		dialog.setTitle( "Create New Project" );
 		dialog.initModality( Modality.APPLICATION_MODAL );
-		dialog.setResizable( true );
 
 		final TextField projectNameField = new TextField( );
 		final ComboBox<String> frameworkBox = makeComboFor(Project.TestFramework.values( ));
