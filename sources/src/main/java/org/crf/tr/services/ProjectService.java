@@ -27,6 +27,10 @@ public final class ProjectService {
 		return EntityConstraints.checkUnicityOf(repo.store( p.key(), p ));
 	}
 	
+	public final Optional<Project> remove(final Project.Key key) {
+		final Repository< Project.Key, Project > repo = RepositoryFactory.makeProjectRepo();
+		return repo.remove( key );
+	}
 	
 	static final class EntityConstraints {
 		static final Project checkUnicityOf(final Optional<Project> storeResult) throws EntityAlreadyExistsException {

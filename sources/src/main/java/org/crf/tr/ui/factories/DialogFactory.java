@@ -8,7 +8,7 @@ import javafx.scene.control.Dialog;
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
 import org.crf.tr.ui.factories.builders.NewProjectBuilder;
-import org.crf.tr.ui.factories.builders.OpenProjectBuilder;
+import org.crf.tr.ui.factories.builders.ManageProjectBuilder;
 import org.crf.tr.ui.factories.builders.ShellBuilder;
 
 /**
@@ -19,8 +19,8 @@ import org.crf.tr.ui.factories.builders.ShellBuilder;
 ///REFINEME: create separate builder classes for each public makeXxx() function ;)
 public final class DialogFactory {
 
-	public static final Dialog<Project> makeOpenProjectFor(final TestReporter owner) {
-		return OpenProjectBuilder.buildFor( owner );
+	public static final Dialog<Project> makeManageProjectFor(final TestReporter owner) {
+		return ManageProjectBuilder.buildFor( owner );
 	}
 
 	public static final Dialog<Project> makeNewProjectFor(final TestReporter owner) {

@@ -45,14 +45,14 @@ public final class MenuBarFactory {
 		});
 		newProject.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+N" ));
 
-		final MenuItem open = new MenuItem( "Open" );
+		final MenuItem open = new MenuItem( "Manage" );
 		open.setOnAction( evt -> {
-			final Dialog<Project> dialog = DialogFactory.makeOpenProjectFor( owner );
+			final Dialog<Project> dialog = DialogFactory.makeManageProjectFor( owner );
 			final Optional<Project> proj = dialog.showAndWait();
 			if (! proj.isPresent()) return;
 			owner.currentProject(proj.get( ));
 		});
-		open.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+O" ));
+		open.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+M" ));
 		
 		final MenuItem archive = new MenuItem( "Archive" );
 		archive.setOnAction( evt -> {

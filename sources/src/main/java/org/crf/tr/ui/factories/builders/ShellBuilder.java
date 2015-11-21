@@ -75,7 +75,7 @@ public final class ShellBuilder {
 		
 		final Node execButton = shellDialog.getDialogPane().lookupButton( exec );
 		execButton.addEventFilter(EventType.ROOT, evt -> {
-			if( evt.getEventType().equals( ActionEvent.ACTION )) {
+			if (ActionEvent.ACTION.equals(evt.getEventType( ))) {
 				final String cmd = CommandConstraints.handleEmpty( commandField, evt );
 				final List<String> command = Arrays.stream(argsField.getText().split( " " ))
 						                           .filter(s -> !s.trim().isEmpty( ))

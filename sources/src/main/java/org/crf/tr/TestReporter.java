@@ -84,7 +84,7 @@ public final class TestReporter extends Application {
 	public final void currentProject(final Project project) {
 		this._currentProject = project;
 		ProjectHeader.makeFor( this );
-//		project.framework().viewBuilder().buildViewsFor( this );
+		project.framework().viewBuilder().buildViewsFor( this );
 	}
 	
 	public final VBox center() {
