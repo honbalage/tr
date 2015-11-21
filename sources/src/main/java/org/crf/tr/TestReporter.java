@@ -20,6 +20,7 @@ import org.crf.tr.ui.factories.MenuBarFactory;
 import org.crf.tr.ui.views.ProjectHeader;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -69,6 +70,7 @@ public final class TestReporter extends Application {
 		main.setCenter( _center );
 		
 		primary.setTitle( "Test Reporter" );
+		primary.getIcons().add(new Image( "file:src/main/resources/images/tr-icon.png" ));
 		primary.setScene(new Scene(main, width(), height( )));
 		primary.show( );
 	}
