@@ -3,6 +3,7 @@
  */
 package org.crf.tr.db;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -15,6 +16,11 @@ import java.util.Optional;
  * E: entity
  * */
 public interface Repository <K, E> {
+
+	/**
+	 * @return a {@link java.util.List} of all entities stored.
+	 * */
+	public List<E> listAll();
 
 	/**
 	 * Retrieves the entity corresponding to the given key.

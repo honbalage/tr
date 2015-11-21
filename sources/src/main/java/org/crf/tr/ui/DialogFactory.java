@@ -26,12 +26,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -41,6 +43,7 @@ import java.util.stream.Collectors;
 import org.crf.tr.TestReporter;
 import org.crf.tr.commands.Executor;
 import org.crf.tr.model.Project;
+import org.crf.tr.services.factories.ServiceFactory;
 
 import javafx.stage.Modality;
 import javafx.scene.Node;
@@ -53,9 +56,39 @@ import java.util.Arrays;
  * @author cvirtue
  * @version "%I, %G"
  */
+///REFINEME: create separate builder classes for each public makeXxx() function ;)
 public final class DialogFactory {
 
 	private static final FileChooser _fileChooser = new FileChooser( );
+	
+	public static final Dialog<Project> makeOpenProjectFor(final TestReporter owner) {
+		final Dialog<Project> dialog = new Dialog<>( );
+		dialog.setTitle( "Open Project" );
+		
+		///ELABORATEME: ServiceFactory.makeForProjects().listAll( );
+		///             then create a...
+		final List<Project> projects = ServiceFactory.makeForProjects().listAll( );
+		final ListView<Project> projectsView = new ListView<>(FXCollections.observableArrayList( projects ));
+		projectsView.setEditable( false );
+		final Pane content = makeOpenProjectPane( owner, projectsView );
+		
+		final ButtonType open = new ButtonType( "Open", ButtonData.OK_DONE );
+		final ButtonType cancel = new ButtonType( "Cancel", ButtonData.CANCEL_CLOSE );
+		dialog.getDialogPane().getButtonTypes().add( open );
+		dialog.getDialogPane().getButtonTypes().add( cancel );
+		dialog.setResultConverter( button -> {
+			if (cancel.equals( button )) return null;
+			return projectsView.getSelectionModel().getSelectedItem();
+		});
+		dialog.getDialogPane().setContent( content );
+		return dialog;
+	}
+	
+	static final Pane makeOpenProjectPane(final TestReporter owner, final Node... nodes) {
+		final StackPane stack = new StackPane( );
+		stack.getChildren().add( nodes[0] );
+		return stack;
+	}
 	
 	public static final Dialog<Project> makeNewProjectFor(final TestReporter owner) {
 		final Dialog<Project> dialog = new Dialog<>( );
@@ -65,13 +98,13 @@ public final class DialogFactory {
 
 		final TextField projectNameField = new TextField( );
 		final ComboBox<String> frameworkBox = makeComboFor(Project.TestFramework.values( ));
-        final Pane central = makeCreateProjectPane( owner, projectNameField, frameworkBox );
-		dialog.getDialogPane().setContent( central );
+        final Pane content = makeCreateProjectPane( owner, projectNameField, frameworkBox );
+		dialog.getDialogPane().setContent( content );
         
 		final ButtonType create = new ButtonType( "Create", ButtonData.OK_DONE );
 		final ButtonType cancel = new ButtonType( "Cancel", ButtonData.CANCEL_CLOSE );
-		dialog.setResultConverter( btype -> {
-			if (btype == cancel) return null;
+		dialog.setResultConverter( button -> {
+			if (cancel.equals( button )) return null;
 
 			return new Project( projectNameField.getText( )
 					           ,Project.TestFramework.valueOf((String) frameworkBox.getValue( )));

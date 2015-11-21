@@ -47,8 +47,10 @@ public final class MenuBarFactory {
 
 		final MenuItem open = new MenuItem( "Open" );
 		open.setOnAction( evt -> {
-			// TODONE: call file chooser && results opener
-			out.println( "Test Results opened.." );
+			final Dialog<Project> dialog = DialogFactory.makeOpenProjectFor( owner );
+			final Optional<Project> proj = dialog.showAndWait();
+			if (! proj.isPresent()) return;
+			owner.currentProject(proj.get( ));
 		});
 		open.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+O" ));
 		

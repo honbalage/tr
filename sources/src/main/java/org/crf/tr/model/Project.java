@@ -3,6 +3,7 @@
  */
 package org.crf.tr.model;
 
+import static java.lang.String.format;
 import org.crf.tr.ui.views.builders.ViewBuilder;
 
 /**
@@ -43,6 +44,11 @@ public final class Project {
 
 	public final Key key() {
 		return new Key( this );
+	}
+
+	@Override
+	public final String toString() {
+		return format("%s [%s]", _name, _framework.toString( ));
 	}
 
 	/**
