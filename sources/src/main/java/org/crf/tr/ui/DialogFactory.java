@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -24,6 +25,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
@@ -38,6 +40,7 @@ import java.util.stream.Collectors;
 
 import org.crf.tr.TestReporter;
 import org.crf.tr.commands.Executor;
+import org.crf.tr.model.Project;
 
 import javafx.stage.Modality;
 import javafx.scene.Node;
@@ -53,6 +56,49 @@ import java.util.Arrays;
 public final class DialogFactory {
 
 	private static final FileChooser _fileChooser = new FileChooser( );
+	
+	public static final Dialog<Project> makeNewProjectFor(final TestReporter owner) {
+		final Dialog<Project> dialog = new Dialog<>( );
+		dialog.setTitle( "Create New Project" );
+		dialog.initModality( Modality.APPLICATION_MODAL );
+		dialog.setResizable( true );
+
+		final TextField projectNameField = new TextField( );
+		final ComboBox<String> frameworkBox = makeComboFor(Project.TestFramework.values( ));
+        final Pane central = makeCreateProjectPane( owner, projectNameField, frameworkBox );
+		dialog.getDialogPane().setContent( central );
+        
+		final ButtonType create = new ButtonType( "Create", ButtonData.OK_DONE );
+		final ButtonType cancel = new ButtonType( "Cancel", ButtonData.CANCEL_CLOSE );
+		dialog.setResultConverter( btype -> {
+			if (btype == cancel) return null;
+
+			return new Project( projectNameField.getText( )
+					           ,Project.TestFramework.valueOf((String) frameworkBox.getValue( )));
+		});
+		dialog.getDialogPane().getButtonTypes().add( create );
+		dialog.getDialogPane().getButtonTypes().add( cancel );
+		return dialog;
+	}
+	
+	static final Pane makeCreateProjectPane(final TestReporter owner, final Node... nodes) {
+		final GridPane grid = new GridPane();
+		grid.setVgap( 3.1 );
+		grid.setHgap( 3.1 );
+
+		grid.add( new Label("Project Name: "), 1, 1 );
+		grid.add( nodes[0], 2, 1 );
+		grid.add( new Label("Framework Type: "), 1, 2 );
+		grid.add( nodes[1], 2, 2 );
+		return grid;
+	}
+	
+	static final ComboBox<String> makeComboFor(final Project.TestFramework[] values) {
+		return new ComboBox<>(FXCollections.observableArrayList(
+				                              Arrays.stream(Project.TestFramework.values())
+                                                    .map(v -> v.toString( ) )
+                                                    .collect(Collectors.toList())));
+	}
 	
 	public static final Dialog<String> makeShellFor(final TestReporter owner) {
 		final Dialog<String> shellDialog = new Dialog<>( );

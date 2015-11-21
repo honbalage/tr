@@ -3,6 +3,7 @@
  */
 package org.crf.tr;
 
+import org.crf.tr.model.Project;
 import org.crf.tr.ui.MenuBarFactory;
 
 
@@ -13,6 +14,7 @@ import org.crf.tr.ui.MenuBarFactory;
 //import com.mongodb.DBCollection;
 //
 //import com.mongodb.DBObject;
+
 
 import javafx.application.Application;
 import javafx.scene.layout.BorderPane;
@@ -69,5 +71,15 @@ public final class TestReporter extends Application {
 		return this._primary;
 	}
 
+	public final Project currentProject() {
+		return _currentProject;
+	}
+	
+	public final void currentProject(final Project project) {
+		this._currentProject = project;
+//		project.framework().viewBuilder().buildViewsFor( this );
+	}
+	
 	private Stage _primary;
+	private Project _currentProject;
 }

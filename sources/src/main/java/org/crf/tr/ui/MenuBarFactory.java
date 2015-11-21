@@ -3,15 +3,22 @@
  */
 package org.crf.tr.ui;
 
+import org.crf.tr.services.factories.ServiceFactory;
+import org.crf.tr.services.signals.EntityAlreadyExistsException;
+
+import java.util.Optional;
 
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Dialog;
 import static java.lang.System.out;
 import javafx.scene.control.Menu;
+import javafx.scene.control.Alert.AlertType;
 
+import org.crf.tr.model.Project;
 import org.crf.tr.TestReporter;
 
 
@@ -24,6 +31,20 @@ public final class MenuBarFactory {
 
 	static final Menu makeFileMenuFor(final TestReporter owner) {
 		final Menu file = new Menu( "File" );
+		final MenuItem newProject = new MenuItem( "New" );
+		newProject.setOnAction( evt -> {
+			final Dialog<Project> dialog = DialogFactory.makeNewProjectFor( owner );
+			final Optional<Project> proj = dialog.showAndWait();
+			if (! proj.isPresent()) return;
+			try {
+
+				owner.currentProject(ServiceFactory.makeForProjects( ).store(proj.get( )));
+			} catch( final EntityAlreadyExistsException e ) {
+				handle( e, proj.get() );
+			}
+		});
+		newProject.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+N" ));
+
 		final MenuItem open = new MenuItem( "Open" );
 		open.setOnAction( evt -> {
 			// TODONE: call file chooser && results opener
@@ -44,8 +65,17 @@ public final class MenuBarFactory {
 	    	System.exit( 0 );
 	    });
 	    exit.setAccelerator(KeyCombination.keyCombination( "Ctrl+Q" ));
-	    file.getItems().addAll( open, archive, new SeparatorMenuItem(), exit );
+	    file.getItems().addAll( newProject, open, archive, new SeparatorMenuItem(), exit );
 		return file;
+	}
+	
+	static final void handle(final EntityAlreadyExistsException e, final Project p) {
+		final Alert alert = new Alert( AlertType.ERROR );
+		alert.setTitle( "Project Already Exists" );
+		alert.setHeaderText(String.format( "Project with the given name \"%s\" under the given test framework \"%s\" already exists!"
+				                          ,p.name()
+				                          ,p.framework().toString()));
+		alert.show();
 	}
 
 	static final Menu makeRunMenuFor(final TestReporter owner) {
