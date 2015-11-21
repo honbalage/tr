@@ -21,6 +21,10 @@ import javafx.scene.layout.VBox;
  */
 public final class ProjectHeader extends HBox implements Viewable {
 
+	public static final ProjectHeader makeDefaultFor(final TestReporter owner) {
+		return new ProjectHeader( );
+	}
+
 	public static final ProjectHeader makeFor(final TestReporter owner) {
 		final Project project = owner.currentProject( );
 		final VBox center = owner.center();

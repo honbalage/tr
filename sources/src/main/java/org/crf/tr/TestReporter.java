@@ -69,7 +69,7 @@ public final class TestReporter extends Application {
 		main.setCenter( _center );
 		
 		primary.setTitle( "Test Reporter" );
-		primary.setScene(new Scene( main, 1024, 768 ));
+		primary.setScene(new Scene(main, width(), height( )));
 		primary.show( );
 	}
 
@@ -90,6 +90,17 @@ public final class TestReporter extends Application {
 	public final VBox center() {
 		return _center;
 	}
+
+	public final int width() {
+		return _width;
+	}
+
+	public final int height() {
+		return _height;
+	}
+
+	private final int _width = 1024;
+	private final int _height = 768;
 
 	private VBox _center;
 	private Stage _primary;
