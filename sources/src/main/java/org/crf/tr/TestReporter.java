@@ -4,7 +4,6 @@
 package org.crf.tr;
 
 import org.crf.tr.model.Project;
-import org.crf.tr.ui.MenuBarFactory;
 
 
 //import org.crf.tr.mongoDB.MongoDBJDBC;
@@ -16,8 +15,14 @@ import org.crf.tr.ui.MenuBarFactory;
 //import com.mongodb.DBObject;
 
 
+import org.crf.tr.ui.factories.LayoutFactory;
+import org.crf.tr.ui.factories.MenuBarFactory;
+import org.crf.tr.ui.views.ProjectHeader;
+
 import javafx.application.Application;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
@@ -61,6 +66,8 @@ public final class TestReporter extends Application {
 		this._primary = primary;
 		final BorderPane main = new BorderPane( );
 		main.setTop(MenuBarFactory.makeFor( this ));
+		_center = LayoutFactory.makeCenterFor( this );
+		main.setCenter( _center );
 		
 		primary.setTitle( "Test Reporter" );
 		primary.setScene(new Scene( main, 1024, 768 ));
@@ -77,9 +84,15 @@ public final class TestReporter extends Application {
 	
 	public final void currentProject(final Project project) {
 		this._currentProject = project;
+		ProjectHeader.makeFor( this );
 //		project.framework().viewBuilder().buildViewsFor( this );
 	}
 	
+	public final VBox center() {
+		return _center;
+	}
+
+	private VBox _center;
 	private Stage _primary;
 	private Project _currentProject;
 }

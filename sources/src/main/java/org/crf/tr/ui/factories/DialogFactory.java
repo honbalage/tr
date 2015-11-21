@@ -1,7 +1,7 @@
 /**
  * DialogFactory.java
  */
-package org.crf.tr.ui;
+package org.crf.tr.ui.factories;
 
 import static java.lang.String.format;
 

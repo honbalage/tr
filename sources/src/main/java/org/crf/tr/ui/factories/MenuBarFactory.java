@@ -1,7 +1,7 @@
 /**
  * MenuBarFactory.java
  */
-package org.crf.tr.ui;
+package org.crf.tr.ui.factories;
 
 import org.crf.tr.services.factories.ServiceFactory;
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
