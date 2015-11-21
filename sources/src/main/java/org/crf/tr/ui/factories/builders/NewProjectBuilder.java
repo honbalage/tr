@@ -65,6 +65,9 @@ public final class NewProjectBuilder {
 			}
 		});
 
+///ELABORATEME: create a cache for images..
+//		final Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+//		stage.getIcons().add(new Image( "file:src/main/resources/images/add-icon.png", 16, 16, false, true ));
 		return dialog;
 	}
 

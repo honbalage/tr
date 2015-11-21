@@ -101,7 +101,7 @@ public final class TestReporter extends Application {
 		return _height;
 	}
 
-	private final int _width = 1024;
+	private final int _width  = 1280;
 	private final int _height = 768;
 
 	private VBox _center;
