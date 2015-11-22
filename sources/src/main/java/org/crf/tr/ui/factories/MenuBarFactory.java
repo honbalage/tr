@@ -5,12 +5,9 @@ package org.crf.tr.ui.factories;
 
 import org.crf.tr.services.factories.ServiceFactory;
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
-
+import org.crf.tr.ui.images.ImageCash;
 import java.util.Optional;
-
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
@@ -33,8 +30,7 @@ public final class MenuBarFactory {
 
 	static final Menu makeFileMenuFor(final TestReporter owner) {
 		final Menu file = new Menu( "File" );
-		final MenuItem newProject = new MenuItem( "New"
-				                                 ,new ImageView(new Image( "file:src/main/resources/images/add-icon.png", 16, 16, false, true )));
+		final MenuItem newProject = new MenuItem("New", ImageCash.instance().get( "add-icon.png" ));
 		newProject.setOnAction( evt -> {
 			final Dialog<Project> dialog = DialogFactory.makeNewProjectFor( owner );
 			final Optional<Project> proj = dialog.showAndWait();
@@ -48,8 +44,7 @@ public final class MenuBarFactory {
 		});
 		newProject.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+N" ));
 
-		final MenuItem open = new MenuItem( "Manage"
-				                           ,new ImageView(new Image( "file:src/main/resources/images/mng-icon.gif", 16, 16, false, true )));
+		final MenuItem open = new MenuItem("Manage", ImageCash.instance().get( "mng-icon.gif" ));
 		open.setOnAction( evt -> {
 			final Dialog<Project> dialog = DialogFactory.makeManageProjectFor( owner );
 			final Optional<Project> proj = dialog.showAndWait();
@@ -58,16 +53,14 @@ public final class MenuBarFactory {
 		});
 		open.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+M" ));
 		
-		final MenuItem save = new MenuItem( "Save"
-                                           ,new ImageView(new Image( "file:src/main/resources/images/save-icon.png", 16, 16, false, true )));
+		final MenuItem save = new MenuItem("Save", ImageCash.instance().get( "save-icon.png" ));
 		save.setOnAction( evt -> {
 			// TODONE: store to DB
 			out.println( "Test Results saved to db.." );
 		});
 		save.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+S" ));
 	    
-		final MenuItem exit = new MenuItem( "Exit"
-				                           ,new ImageView(new Image( "file:src/main/resources/images/exit-icon.png", 16, 16, false, true )));
+		final MenuItem exit = new MenuItem("Exit", ImageCash.instance().get( "exit-icon.png" ));
 	    exit.setOnAction( evt -> {
 	    	// TODONE: setup callbacks..
 	    	System.exit( 0 );
@@ -88,8 +81,7 @@ public final class MenuBarFactory {
 
 	static final Menu makeRunMenuFor(final TestReporter owner) {
 		final Menu run = new Menu( "Run" );
-		final MenuItem shellCommand = new MenuItem( "Shell Command"
-				                                   ,new ImageView(new Image( "file:src/main/resources/images/shell-icon.png", 16, 16, false, true )));
+		final MenuItem shellCommand = new MenuItem("Shell Command", ImageCash.instance().get( "shell-icon.png" ));
 		shellCommand.setOnAction( evt -> {
 			final Dialog<String> shellDialog = DialogFactory.makeShellFor( owner );
 		    shellDialog.show( );
