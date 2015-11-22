@@ -23,9 +23,11 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
+import org.crf.tr.ui.images.ImageCash;
 
 /**
  *
@@ -65,9 +67,8 @@ public final class NewProjectBuilder {
 			}
 		});
 
-///ELABORATEME: create a cache for images..
-//		final Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-//		stage.getIcons().add(new Image( "file:src/main/resources/images/add-icon.png", 16, 16, false, true ));
+		final Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(ImageCash.instance().get( "add-icon.png" ).getImage( ));
 		return dialog;
 	}
 
