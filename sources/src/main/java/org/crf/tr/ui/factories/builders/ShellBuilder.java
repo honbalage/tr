@@ -49,7 +49,9 @@ import org.crf.tr.ui.images.Images;
  */
 public final class ShellBuilder {
 
-	private static final FileChooser _fileChooser = new FileChooser( );
+	static final FileChooser fileChooser() {
+		return FileChooserHolder._fileChooser;
+	}
 
 	public static final Dialog<String> buildFor(final TestReporter owner) {
 		final Dialog<String> shellDialog = new Dialog<>( );
@@ -162,7 +164,7 @@ public final class ShellBuilder {
 	static final Button makeCommandBrowserButton(final TextField commandField, final TestReporter owner) {
 		final Button browse = new Button( "Browse" );
 		browse.setOnAction( evt -> {
-			final File f = _fileChooser.showOpenDialog(owner.primary( ));
+			final File f = fileChooser().showOpenDialog(owner.primary( ));
 			if( f == null ) return;
 			commandField.setText(f.getAbsolutePath( ));
 		});
@@ -173,7 +175,7 @@ public final class ShellBuilder {
 	static final Button makeArgsBrowserButton(final TextField argsField, final TestReporter owner) {
 		final Button browse = new Button( "Browse" );
 		browse.setOnAction( evt -> {
-			final File f = _fileChooser.showOpenDialog(owner.primary( ));
+			final File f = fileChooser().showOpenDialog(owner.primary( ));
 			if( f == null ) return;
 
 			final StringBuilder builder = new StringBuilder( );
@@ -218,5 +220,9 @@ public final class ShellBuilder {
 		commandPane.setSpacing( 6.3 );
 	    commandPane.getChildren().addAll( grid, nodes[2] );
 		return commandPane;
+	}
+
+	private static final class FileChooserHolder {
+		static final FileChooser _fileChooser = new FileChooser( );
 	}
 }

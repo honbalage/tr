@@ -93,7 +93,7 @@ public final class NewProjectBuilder {
 
 
 
-	static final class ValueConstraints {
+	public static final class ValueConstraints {
 		static final boolean isEmpty(final String value) {
 			return (value == null || value.isEmpty());
 		}

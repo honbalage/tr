@@ -7,6 +7,8 @@ import org.crf.tr.services.factories.ServiceFactory;
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
 import org.crf.tr.ui.images.Images;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import javafx.scene.control.SeparatorMenuItem;
@@ -61,14 +63,25 @@ public final class MenuBarFactory {
 			out.println( "Test Results saved to db.." );
 		});
 		save.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+S" ));
-	    
+
+		final MenuItem importItem = new MenuItem("Import", Images.get( "import-icon.png" ));
+		importItem.setOnAction( evt -> {
+			final Optional<Dialog<File>> dialog = DialogFactory.makeImportTestOutputFor( owner );
+			if (! dialog.isPresent()) return;
+
+			final Optional<File> testOutput = dialog.get( ).showAndWait( );
+			if (! testOutput.isPresent()) return;
+			owner.process(Paths.get(testOutput.get( ).getAbsolutePath( )));
+		});
+		importItem.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+I" ));
+
 		final MenuItem exit = new MenuItem("Exit", Images.get( "exit-icon.png" ));
 	    exit.setOnAction( evt -> {
 	    	// TODONE: setup callbacks..
 	    	System.exit( 0 );
 	    });
 	    exit.setAccelerator(KeyCombination.keyCombination( "Ctrl+Q" ));
-	    file.getItems().addAll( newProject, open, save, new SeparatorMenuItem(), exit );
+	    file.getItems().addAll( newProject, open, save, importItem, new SeparatorMenuItem(), exit );
 		return file;
 	}
 	
