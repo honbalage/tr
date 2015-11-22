@@ -6,6 +6,4 @@ target
 *.settings
 *.swp
 *.classpath
-*tr
-!*src/main/java
 
