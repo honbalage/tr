@@ -63,4 +63,8 @@ public final class ProjectHeader extends HBox implements Viewable {
 	ProjectHeader() {
 		super( );
 	}
+
+	@Override
+	public final void refresh() {
+	}
 }

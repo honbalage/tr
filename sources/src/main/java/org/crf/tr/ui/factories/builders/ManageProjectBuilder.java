@@ -6,7 +6,7 @@ package org.crf.tr.ui.factories.builders;
 import java.util.List;
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
-import org.crf.tr.services.factories.ServiceFactory;
+import org.crf.tr.services.factories.Services;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -30,7 +30,7 @@ public final class ManageProjectBuilder {
 		final Dialog<Project> dialog = new Dialog<>( );
 		dialog.setTitle( "Manage Projects" );
 		
-		final List<Project> projects = ServiceFactory.makeForProjects().listAll( );
+		final List<Project> projects = Services.makeForProjects().listAll( );
 		final ListView<Project> projectsView = new ListView<>(FXCollections.observableArrayList( projects ));
 		projectsView.setEditable( false );
 		final Pane content = makeOpenProjectPane( owner, projectsView );
@@ -51,7 +51,7 @@ public final class ManageProjectBuilder {
 			if (ActionEvent.ACTION.equals(evt.getEventType( ))) {
 				final Project selected = projectsView.getSelectionModel().getSelectedItem();
 				if (selected != null) {
-					ServiceFactory.makeForProjects().remove(selected.key( ));
+					Services.makeForProjects().remove(selected.key( ));
 					projectsView.getItems().remove( selected );
 				}
 				evt.consume( );

@@ -3,7 +3,7 @@
  */
 package org.crf.tr.ui.factories;
 
-import org.crf.tr.services.factories.ServiceFactory;
+import org.crf.tr.services.factories.Services;
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
 import org.crf.tr.ui.images.Images;
 
@@ -41,7 +41,7 @@ public final class MenuBarFactory {
 			if (! proj.isPresent()) return;
 			try {
 
-				owner.currentProject(ServiceFactory.makeForProjects( ).store(proj.get( )));
+				owner.currentProject(Services.makeForProjects( ).store(proj.get( )));
 			} catch( final EntityAlreadyExistsException e ) {
 				handle( e, proj.get() );
 			}

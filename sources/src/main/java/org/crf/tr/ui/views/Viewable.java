@@ -10,4 +10,5 @@ package org.crf.tr.ui.views;
  */
 public interface Viewable {
 
+	public void refresh();
 }

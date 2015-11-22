@@ -18,7 +18,7 @@ import org.crf.tr.model.Project;
 //import com.mongodb.DBObject;
 
 
-import org.crf.tr.services.factories.ServiceFactory;
+import org.crf.tr.services.factories.Services;
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
 import org.crf.tr.ui.factories.LayoutFactory;
 import org.crf.tr.ui.factories.MenuBarFactory;
@@ -88,7 +88,7 @@ public final class TestReporter extends Application {
 	private static final void setupTestProject(final TestReporter tr) {
 		final Project p = new Project( "First", Project.TestFramework.valueOf( "Boost" ));
 		try {
-			ServiceFactory.makeForProjects().store( p );
+			Services.makeForProjects().store( p );
 		} catch (EntityAlreadyExistsException e) {
 		}
 		tr.currentProject( p );
