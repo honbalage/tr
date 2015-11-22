@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
-import org.crf.tr.ui.images.ImageCash;
+import org.crf.tr.ui.images.Images;
 
 /**
  *
@@ -68,7 +68,7 @@ public final class NewProjectBuilder {
 		});
 
 		final Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-		stage.getIcons().add(ImageCash.instance().get( "add-icon.png" ).getImage( ));
+		stage.getIcons().add(Images.get( "add-icon.png" ).getImage( ));
 		return dialog;
 	}
 

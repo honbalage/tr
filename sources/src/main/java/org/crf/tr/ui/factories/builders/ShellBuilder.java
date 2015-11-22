@@ -40,6 +40,7 @@ import javafx.stage.Modality;
 
 import org.crf.tr.TestReporter;
 import org.crf.tr.commands.Executor;
+import org.crf.tr.ui.images.Images;
 
 /**
  *
@@ -89,6 +90,7 @@ public final class ShellBuilder {
 				evt.consume( );
 			}
 		});
+		shellDialog.setGraphic(Images.viewOf( "shell-icon.png", 42, 42 ));
 		return shellDialog;
 	}
 

@@ -4,9 +4,10 @@
 package org.crf.tr.ui.factories;
 
 import org.crf.tr.TestReporter;
+import org.crf.tr.ui.images.Images;
 import org.crf.tr.ui.views.ProjectHeader;
 
-import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -24,9 +25,10 @@ public final class LayoutFactory {
 	public static final VBox makeCenterFor(final TestReporter owner) {
 		final VBox center = new VBox( );
 		center.getChildren().add( 0, ProjectHeader.makeDefaultFor( owner ));
-		
-		final Image image = new Image( "file:src/main/resources/images/bcg.jpg", owner.width(), owner.height(), false, true );
-		final BackgroundImage bcgImage = new BackgroundImage( image
+
+		final ImageView iview = Images.get("bcg.jpg", owner.width(), owner.height( ));
+		iview.setOpacity( 0.01 );
+		final BackgroundImage bcgImage = new BackgroundImage( iview.getImage()
 				                                             ,BackgroundRepeat.REPEAT
 				                                             ,BackgroundRepeat.NO_REPEAT
 				                                             ,BackgroundPosition.DEFAULT

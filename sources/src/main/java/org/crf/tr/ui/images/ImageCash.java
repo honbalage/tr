@@ -33,12 +33,21 @@ public final class ImageCash {
 	public final ImageView get(final String name, final int w, final int h) {
 		final ImageView image = _cash.get( name );
 		if (image == null) {
-			final ImageView img = new ImageView(new Image(format( _imageSourcesURIFormat, name ), w, h, false, true ));
+			final ImageView img = viewOf( name, w, h );
+			img.setCache( true );
 			_cash.put( name, img );
 			return img;
 		}
 		return image;
 
+	}
+
+	public final Image imageOf(final String name, final int w, final int h) {
+		return new Image(format( _imageSourcesURIFormat, name ), w, h, false, true );
+	}
+
+	public final ImageView viewOf(final String name, final int w, final int h) {
+		return new ImageView(imageOf( name, w, h ));
 	}
 
 
