@@ -3,7 +3,7 @@
  */
 package org.crf.tr.ui.factories;
 
-import org.crf.tr.services.factories.Services;
+import org.crf.tr.services.factories.Services; 
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
 import org.crf.tr.ui.images.Images;
 
@@ -17,12 +17,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Dialog;
-import static java.lang.System.out;
 import javafx.scene.control.Menu;
 import javafx.scene.control.Alert.AlertType;
 
 import org.crf.tr.model.Project;
 import org.crf.tr.TestReporter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -60,7 +61,7 @@ public final class MenuBarFactory {
 		final MenuItem save = new MenuItem("Save", Images.get( "save-icon.png" ));
 		save.setOnAction( evt -> {
 			// TODONE: store to DB
-			out.println( "Test Results saved to db.." );
+			_log.info( "Test Results saved to db.." );
 		});
 		save.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+S" ));
 
@@ -78,6 +79,7 @@ public final class MenuBarFactory {
 		final MenuItem exit = new MenuItem("Exit", Images.get( "exit-icon.png" ));
 	    exit.setOnAction( evt -> {
 	    	// TODONE: setup callbacks..
+	    	_log.info( "Exiting Test Reporter.." );
 	    	System.exit( 0 );
 	    });
 	    exit.setAccelerator(KeyCombination.keyCombination( "Ctrl+Q" ));
@@ -88,9 +90,11 @@ public final class MenuBarFactory {
 	static final void handle(final EntityAlreadyExistsException e, final Project p) {
 		final Alert alert = new Alert( AlertType.ERROR );
 		alert.setTitle( "Project Already Exists" );
-		alert.setHeaderText(String.format( "Project with the given name \"%s\" under the given test framework \"%s\" already exists!"
-				                          ,p.name()
-				                          ,p.framework().toString()));
+		final String message = String.format( "Project with the given name \"%s\" under the given test framework \"%s\" already exists!"
+                                             ,p.name()
+                                             ,p.framework().toString());
+		alert.setHeaderText( message );
+		_log.error( "While creating user: " + message );
 		alert.show();
 	}
 
@@ -122,4 +126,5 @@ public final class MenuBarFactory {
 		return menuBar;
 	}
 
+	private static final Logger _log = LoggerFactory.getLogger( MenuBarFactory.class );
 }

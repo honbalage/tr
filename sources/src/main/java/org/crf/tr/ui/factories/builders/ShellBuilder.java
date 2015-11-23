@@ -41,6 +41,8 @@ import javafx.stage.Modality;
 import org.crf.tr.TestReporter;
 import org.crf.tr.commands.Executor;
 import org.crf.tr.ui.images.Images;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -68,9 +70,7 @@ public final class ShellBuilder {
 		shellDialog.getDialogPane().setContent( commandPane );
 
 		final ButtonType exec = new ButtonType( "Execute", ButtonData.OK_DONE );
-		shellDialog.setResultConverter( btype -> {
-			return "";
-		});
+		shellDialog.setResultConverter( btype -> "" );
 
 		final ButtonType cancel = new ButtonType( "Cancel", ButtonData.CANCEL_CLOSE );
 		shellDialog.getDialogPane().getButtonTypes().add( 0, exec );
@@ -196,8 +196,11 @@ public final class ShellBuilder {
 	static final void handle(final IOException e, final File f) {
 		final Alert alert = new Alert( AlertType.ERROR, "IO Error" );
 		alert.setTitle( "IO Error" );
-		alert.setHeaderText( "Message: " + e.getMessage() );
-		alert.setContentText("While reading from: " + f.getAbsolutePath());
+		final String message = e.getMessage( );
+		alert.setHeaderText( "Message: " + message );
+		final String abspath = f.getAbsolutePath();
+		alert.setContentText("While reading from: " + abspath);
+		_log.error(format( "IOError[\"%s\"]: %s", abspath, message ));
 		alert.show( );
 	}
 
@@ -225,4 +228,6 @@ public final class ShellBuilder {
 	private static final class FileChooserHolder {
 		static final FileChooser _fileChooser = new FileChooser( );
 	}
+
+	private static final Logger _log = LoggerFactory.getLogger( ShellBuilder.class );
 }

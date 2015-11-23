@@ -20,7 +20,6 @@ import org.crf.tr.ui.factories.builders.ShellBuilder;
  * @author cvirtue
  * @version "%I, %G"
  */
-///REFINEME: create separate builder classes for each public makeXxx() function ;)
 public final class DialogFactory {
 
 	public static final Dialog<Project> makeManageProjectFor(final TestReporter owner) {

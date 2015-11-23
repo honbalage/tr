@@ -14,6 +14,8 @@ import java.util.Optional;
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
 import org.crf.tr.ui.images.Images;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
@@ -109,6 +111,7 @@ public final class ImportTestOutputBuilder {
 		static final boolean checkExists(final String filepath) {
 			if (! Files.exists(Paths.get( filepath ))) {
 				handleViolation( "File does not exist!" );
+				_log.error( "On attempt to import: file \"" + filepath + "\" does not exists!" );
 				return true;
 			}
 			return false;
@@ -121,4 +124,6 @@ public final class ImportTestOutputBuilder {
 			alert.show( );
 		}
 	}
+
+	private static final Logger _log = LoggerFactory.getLogger( ImportTestOutputBuilder.class );
 }

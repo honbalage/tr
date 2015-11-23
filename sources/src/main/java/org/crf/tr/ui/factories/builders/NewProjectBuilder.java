@@ -28,6 +28,8 @@ import javafx.stage.Stage;
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
 import org.crf.tr.ui.images.Images;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -116,7 +118,10 @@ public final class NewProjectBuilder {
 			final Alert alert = new Alert( AlertType.ERROR );
 			alert.setTitle( "Required Input is Empty" );
 			alert.setHeaderText(format( "%s must be given.", fieldName ));
+			_log.error( "While creating new project: " + fieldName + " was not given");
 			alert.show( );
 		}
 	}
+
+	private static final Logger _log = LoggerFactory.getLogger( NewProjectBuilder.class );
 }

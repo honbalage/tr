@@ -22,15 +22,18 @@ import org.crf.tr.services.factories.Services;
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
 import org.crf.tr.ui.factories.LayoutFactory;
 import org.crf.tr.ui.factories.MenuBarFactory;
+import org.crf.tr.ui.images.Images;
 import org.crf.tr.ui.views.ProjectHeader;
 import org.crf.tr.ui.views.Viewable;
 
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  *
@@ -76,7 +79,7 @@ public final class TestReporter extends Application {
 		main.setCenter( _center );
 		
 		primary.setTitle( "Test Reporter" );
-		primary.getIcons().add(new Image( "file:src/main/resources/images/tr-icon.png" ));
+		primary.getIcons().add(Images.get( "tr-icon.png" ).getImage( ));
 		primary.setScene(new Scene(main, width(), height( )));
 		
 		///TODONE: remove
@@ -92,6 +95,7 @@ public final class TestReporter extends Application {
 		} catch (EntityAlreadyExistsException e) {
 		}
 		tr.currentProject( p );
+		_log.debug( "Project " + p.toString() + " created." );
 	}
 
 	public final Stage primary() {
@@ -122,7 +126,7 @@ public final class TestReporter extends Application {
 
 	public final void process(final Path testOutput) {
 		///ELABORATEME: for( view : views ) view->refresh( );
-		System.out.println( "[INFO] File: " + testOutput.toString() + " opened.." );
+		_log.info( "File \"" + testOutput.toString() + "\" opened." );
 	}
 
 	public final List<Viewable> views() {
@@ -134,6 +138,7 @@ public final class TestReporter extends Application {
 	}
 
 ///Members...
+	private static final Logger _log = LoggerFactory.getLogger( TestReporter.class );
 	private final int _width  = 1280;
 	private final int _height = 768	;
 
