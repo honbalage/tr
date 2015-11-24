@@ -14,6 +14,7 @@ import java.util.Optional;
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
 import org.crf.tr.ui.images.Images;
+import org.crf.tr.ui.views.Styles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -51,12 +53,13 @@ public final class ImportTestOutputBuilder {
 
 		 final ButtonType imprt = new ButtonType( "Import", ButtonData.OK_DONE );
 		 final ButtonType cancel = new ButtonType( "Cancel", ButtonData.CANCEL_CLOSE );
-		 dialog.getDialogPane().getButtonTypes().addAll( imprt, cancel );
+		 final DialogPane dpane = dialog.getDialogPane();
+		 dpane.getButtonTypes().addAll( imprt, cancel );
 		 dialog.setResultConverter( button -> {
 			 if (cancel.equals( button )) return null;
 			 return new File(filepathField.getText( ));
 		 });
-		 dialog.getDialogPane().setContent( content );
+		 dpane.setContent( content );
 		 dialog.setGraphic(Images.viewOf( "import-icon.png", 42, 42 ));
 		 
 		 final Node importBtn = dialog.getDialogPane().lookupButton( imprt );
@@ -69,6 +72,8 @@ public final class ImportTestOutputBuilder {
 					 evt.consume( );
 			 }
 		 });
+		 Styles.applyOn((Button) importBtn);
+		 Styles.applyOn((Button) dpane.lookupButton( cancel ));
 		 return Optional.of( dialog );
 	}
 
@@ -90,6 +95,7 @@ public final class ImportTestOutputBuilder {
 			if( f == null ) return;
 			field.setText(f.getAbsolutePath( ));
 		});
+		Styles.applyOn( browse );
 		children.add( browse );
 		return pane;
 	}

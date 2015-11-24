@@ -82,7 +82,9 @@ public final class TestReporter extends Application {
 		
 		primary.setTitle( "Test Reporter" );
 		primary.getIcons().add(Images.get( "tr-icon.png" ).getImage( ));
-		primary.setScene(new Scene(main, width(), height( )));
+		final Scene mainScene = new Scene(main, width(), height( ));
+		mainScene.getStylesheets().add( "file:src/main/resources/css/tr-style.css" );
+		primary.setScene( mainScene );
 
 		///TODONE: remove
 		setupTestProject( this );

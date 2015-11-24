@@ -14,21 +14,21 @@ import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
-
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
 import org.crf.tr.tools.Strings;
-import org.crf.tr.ui.images.Images;
+import org.crf.tr.ui.views.Styles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,12 +48,13 @@ public final class NewProjectBuilder {
 		projectNameField.setMinWidth( 130 );
 		final ComboBox<String> frameworkBox = makeComboFor( projectNameField, Project.TestFramework.values( ));
         final Pane content = makeCreateProjectPane( owner, projectNameField, frameworkBox );
-		dialog.getDialogPane().setContent( content );
+        final DialogPane dpane = dialog.getDialogPane();
+		dpane.setContent( content );
         
 		final ButtonType create = new ButtonType( "Create", ButtonData.OK_DONE );
 		final ButtonType cancel = new ButtonType( "Cancel", ButtonData.CANCEL_CLOSE );
-		dialog.getDialogPane().getButtonTypes().add( create );
-		dialog.getDialogPane().getButtonTypes().add( cancel );
+		dpane.getButtonTypes().add( create );
+		dpane.getButtonTypes().add( cancel );
 
 		dialog.setResultConverter( button -> {
 			if (cancel.equals( button )) return null;
@@ -62,7 +63,7 @@ public final class NewProjectBuilder {
             return new Project(name, Project.TestFramework.valueOf( framework ));
 		});
 
-		final Node createBtn = dialog.getDialogPane().lookupButton( create );
+		final Node createBtn = dpane.lookupButton( create );
 		createBtn.addEventFilter( EventType.ROOT, evt -> {
 			if (ActionEvent.ACTION.equals(evt.getEventType( ))) {
 				if( ValueConstraints.isEmpty( projectNameField.getText(), "Project Name" ) ||
@@ -70,9 +71,8 @@ public final class NewProjectBuilder {
 					evt.consume( );
 			}
 		});
-
-		final Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-		stage.getIcons().add(Images.get( "add-icon.png" ).getImage( ));
+		Styles.applyOn((Button) createBtn);
+		Styles.applyOn((Button) dpane.lookupButton( cancel ));
 		return dialog;
 	}
 

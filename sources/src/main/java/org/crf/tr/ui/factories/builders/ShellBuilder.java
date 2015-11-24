@@ -25,8 +25,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Control;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -41,6 +44,7 @@ import javafx.stage.Modality;
 import org.crf.tr.TestReporter;
 import org.crf.tr.commands.Executor;
 import org.crf.tr.ui.images.Images;
+import org.crf.tr.ui.views.Styles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,17 +70,18 @@ public final class ShellBuilder {
 		final TextField argsField = makeCommandField( owner );		
 		final TextArea outputArea = makeOutputArea( owner );
 
-		final Pane commandPane = makeCommandPane( owner, commandField, argsField, outputArea );
-		shellDialog.getDialogPane().setContent( commandPane );
+		final Pane commandPane = makeCommandPane( owner, commandField, argsField, asScrollable( outputArea ));
+		final DialogPane dpane = shellDialog.getDialogPane();
+		dpane.setContent( commandPane );
 
 		final ButtonType exec = new ButtonType( "Execute", ButtonData.OK_DONE );
 		shellDialog.setResultConverter( btype -> "" );
 
 		final ButtonType cancel = new ButtonType( "Cancel", ButtonData.CANCEL_CLOSE );
-		shellDialog.getDialogPane().getButtonTypes().add( 0, exec );
-		shellDialog.getDialogPane().getButtonTypes().add( 1, cancel );
+		dpane.getButtonTypes().add( 0, exec );
+		dpane.getButtonTypes().add( 1, cancel );
 		
-		final Node execButton = shellDialog.getDialogPane().lookupButton( exec );
+		final Node execButton = dpane.lookupButton( exec );
 		execButton.addEventFilter(EventType.ROOT, evt -> {
 			if (ActionEvent.ACTION.equals(evt.getEventType( ))) {
 				final String cmd = CommandConstraints.handleEmpty( commandField, evt );
@@ -92,8 +97,17 @@ public final class ShellBuilder {
 				evt.consume( );
 			}
 		});
+		Styles.applyOn((Button) execButton);
+		Styles.applyOn((Button) dpane.lookupButton( cancel ));
 		shellDialog.setGraphic(Images.viewOf( "shell-icon.png", 42, 42 ));
 		return shellDialog;
+	}
+
+	static final ScrollPane asScrollable(final Control control) {
+		final ScrollPane scrollable = new ScrollPane( control );
+		scrollable.setMinHeight(control.getMinHeight( ));
+		scrollable.setMinWidth(control.getMinWidth( ));
+		return scrollable;
 	}
 
 	static final void readAllInto(final TextArea out, final InputStream stdout) {
@@ -149,6 +163,7 @@ public final class ShellBuilder {
 	static final TextArea makeOutputArea(final TestReporter owner) {
 		final TextArea outputArea = new TextArea( );
 		outputArea.setEditable( false );
+		outputArea.setMinHeight( 210 );
 		return outputArea;
 	}
 	
@@ -169,6 +184,7 @@ public final class ShellBuilder {
 			commandField.setText(f.getAbsolutePath( ));
 		});
 		browse.setPrefWidth( 77 );
+		Styles.applyOn( browse );
 		return browse;
 	}
 	
@@ -221,6 +237,8 @@ public final class ShellBuilder {
 		
 		final VBox commandPane = new VBox( );
 		commandPane.setSpacing( 6.3 );
+		GridPane.setFillWidth( nodes[2],  true );
+		GridPane.setFillHeight( nodes[2],  true );
 	    commandPane.getChildren().addAll( grid, nodes[2] );
 		return commandPane;
 	}

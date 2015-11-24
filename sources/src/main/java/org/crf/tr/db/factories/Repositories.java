@@ -12,7 +12,7 @@ import org.crf.tr.model.Project;
  * @author cvirtue
  * @version "%I, %G"
  */
-public final class RepositoryFactory {
+public final class Repositories {
 
 	public static final Repository<Project.Key, Project> makeProjectRepo() {
 		return _projectRepo;

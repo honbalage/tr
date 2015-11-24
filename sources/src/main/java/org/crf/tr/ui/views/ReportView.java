@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -94,6 +95,7 @@ public abstract class ReportView extends VBox implements Viewable {
 			_log.info( "Report exported.." );
 		});
 		export.setMinWidth( 130 );
+		export.setTooltip(new Tooltip( "Press to export to a .pdf file." ));
 		footer.getChildren().add( export );
 		footer.setStyle( "-fx-border-color: lightgray; -fx-border-width: 1;" );
 		view.getChildren().add( footer );
