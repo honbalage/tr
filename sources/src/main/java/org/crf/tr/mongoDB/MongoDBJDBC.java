@@ -1,20 +1,75 @@
 package org.crf.tr.mongoDB;
 
+import java.io.InputStream;
+import java.net.UnknownHostException;
+import java.util.List;
+
+import org.crf.tr.commands.Executor;
+import org.crf.tr.model.Project.TestFramework;
+import org.crf.tr.mongoDB.model.ProjectModel;
+import org.crf.tr.ui.factories.builders.ShellBuilder;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBObjectBuilder;
+import com.mongodb.CommandResult;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 
 public class MongoDBJDBC {
+	static MongoClient mongo = null;
 	
-	public DB connectToDB(String URL, int Port){
+	public static void startMongo(){
+
+		
+		
+		DB db = connectToDB("localhost", 27017);
+		
+		
+		DBCollection col = getCollection(db, "projects");
+		
+        //create project example
+//		ProjectModel project = createProject(123, "json clover", TestFramework.Boost);
+//		DBObject doc = createDBObject(project);
+//		WriteResult result = insertCollection(col, doc);
+//		System.out.println(result.getUpsertedId());
+//		System.out.println(result.getN());
+//		System.out.println(result.isUpdateOfExisting());
+
+	}
+	
+	public static void finishMongo(){
+		mongo.close();
+	}
+	
+	private static DBObject createDBObject(ProjectModel project) {
+        BasicDBObjectBuilder docBuilder = BasicDBObjectBuilder.start();
+        
+        //If we don’t provide id, MongoDB will create one for us
+        //docBuilder.append("_id", project.getId());
+        docBuilder.append("name", project.getName());
+        docBuilder.append("role", project.getFrameWork().toString());
+        return docBuilder.get();
+    }
+ 
+    private static ProjectModel createProject(int id, String name, TestFramework tf) {
+    	ProjectModel p = new ProjectModel();
+        p.setId(id);
+        p.setName(name);
+        p.setFrameWork(tf);
+        return p;
+    }
+	
+	public static DB connectToDB(String URL, int Port){
 		DB db = null;
 		try{
 			
-			MongoClient mongoClient = new MongoClient( URL, Port );
+			mongo = new MongoClient( URL, Port );
+			db = mongo.getDB("tr");
 			
-			db = mongoClient.getDB("test");
 			System.out.println("Connected successfully");
 			
 		}catch(Exception e){
@@ -23,25 +78,13 @@ public class MongoDBJDBC {
 		return db;
 	}
 	
-	public boolean authenticateDB(DB db, String user, String pw){
-		boolean auth = false;
-		try{
-			char[] password = pw.toCharArray();
-			auth = db.authenticate(user, password);
-	        System.out.println("Authentication: "+auth); 
-			
-		}catch(Exception e){
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-		}
-		return auth;
-	}
 	
-	public DBCollection getCollection(DB db, String coll){
+	public static DBCollection getCollection(DB db, String coll){
 		DBCollection collection = null;
 		try{
 			
 			 collection = db.getCollection(coll);
-	         System.out.println("Collection mycol selected successfully");
+	         System.out.println("Collection " + coll + " selected successfully");
 	         
 		}catch(Exception e){
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -49,14 +92,16 @@ public class MongoDBJDBC {
 		return collection;
 	}
 	
-	public void insertCollection(DBCollection coll, DBObject obj){
+	public static WriteResult insertCollection(DBCollection coll, DBObject obj){
+		WriteResult wr = null;
 		try{
 			
-			coll.insert(obj);
+			wr = coll.insert(obj);
 			
 		}catch(Exception e){
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
+		return wr;
 	}
 	
 	public void removeCollection(DBCollection coll, DBObject obj){

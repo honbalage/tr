@@ -18,6 +18,7 @@ import org.crf.tr.model.Project;
 //import com.mongodb.DBObject;
 
 
+import org.crf.tr.mongoDB.MongoDBJDBC;
 import org.crf.tr.services.factories.Services;
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
 import org.crf.tr.ui.factories.Layouts;
@@ -48,7 +49,15 @@ public final class TestReporter extends Application {
 	 * @param args
 	 */
 	public static void main(final String[] args) {
+		MongoDBJDBC.startMongo();
+		
 		launch( args );
+
+	    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+	        public void run() {
+	            MongoDBJDBC.finishMongo();
+	        }
+	    }, "Shutdown Mongo thread"));
 	}
 
 //	static final Menu makeMongoDBMenu() {
