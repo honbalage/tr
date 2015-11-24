@@ -30,7 +30,7 @@ public final class BoostReportView extends ReportView {
 	}
 
 	@Override
-	public final void print(final Path outputPdf) {
+	public final void export(final Path outputPdf) {
 		
 	}
 
