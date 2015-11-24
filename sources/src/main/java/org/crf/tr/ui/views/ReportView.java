@@ -76,10 +76,10 @@ public abstract class ReportView extends VBox implements Viewable {
 	public abstract void export(final Path outputPdf);
 
 	static final void buildCommentSection(final ReportView view, final TestReporter owner) {
-		final TextArea commentArea = new TextArea( );
-		final TitledPane comments = new TitledPane( "Comments", commentArea );
+		final TitledPane comments = new TitledPane( "Comments", view.commentArea( ));
 		comments.setMinHeight( 70 );
 		comments.setCollapsible( false );
+		Styles.applyOn( comments, "crf-report-view-comments-wrapper" );
 
 		view.getChildren().add( comments );
 	}
@@ -106,7 +106,15 @@ public abstract class ReportView extends VBox implements Viewable {
 		_log.info( "View refreshed.." );
 	}
 
+	public final TestReporter owner() {
+		return _owner;
+	}
+
+	protected final TextArea commentArea() {
+		return _commentArea;
+	}
+
 	private static final Logger _log = LoggerFactory.getLogger( ReportView.class );
-	protected final TestReporter _owner;
-	protected final TextArea _commentArea;
+	private final TestReporter _owner;
+	private final TextArea _commentArea;
 }

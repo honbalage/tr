@@ -1,4 +1,10 @@
 
+.crf-tr-center {
+  -fx-background-color: white;
+  -fx-background-image: url( "file:src/main/resources/images/bcg.jpg" );
+  -fx-background-size: stretch;
+}
+
 .crf-button {
   -fx-border-color: deepskyblue; 
   -fx-border-width: 2; 
@@ -11,6 +17,7 @@
 .crf-button:hover {
   -fx-text-fill: lightseagreen;
   -fx-border-color: lightseagreen; 
+  -fx-background-color: aliceblue;
 }
 
 
@@ -49,6 +56,18 @@
   -fx-text-fill: white;
   -fx-font-weight: bold;
   -fx-font-size: 13;
+}
+
+.crf-report-view-comments-wrapper {
+  -fx-text-fill: white;
+  -fx-font-size: 13;
+  -fx-font-weight: bold;
+}
+
+.crf-report-view-comments-wrapper > .title {
+/*  deepskyblue */
+  -fx-background-color: deepskyblue;
+  -fx-background-radius: 0;
 }
 
 .crf-report-view-footer {
