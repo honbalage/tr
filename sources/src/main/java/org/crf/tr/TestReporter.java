@@ -28,6 +28,7 @@ import org.crf.tr.ui.views.Viewable;
 
 import javafx.application.Application;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -76,12 +77,13 @@ public final class TestReporter extends Application {
 		final BorderPane main = new BorderPane( );
 		main.setTop(MenuBarFactory.makeFor( this ));
 		_center = LayoutFactory.makeCenterFor( this );
+		_container = LayoutFactory.makeContainerFor( this );
 		main.setCenter( _center );
 		
 		primary.setTitle( "Test Reporter" );
 		primary.getIcons().add(Images.get( "tr-icon.png" ).getImage( ));
 		primary.setScene(new Scene(main, width(), height( )));
-		
+
 		///TODONE: remove
 		setupTestProject( this );
 		primary.show( );
@@ -116,6 +118,10 @@ public final class TestReporter extends Application {
 		return _center;
 	}
 
+	public final HBox container() {
+		return _container;
+	}
+
 	public final int width() {
 		return _width;
 	}
@@ -143,6 +149,7 @@ public final class TestReporter extends Application {
 	private final int _height = 768	;
 
 	private VBox _center;
+	private HBox _container;
 	private Stage _primary;
 	private List<Viewable> _views;
 	private Project _currentProject;

@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
+import org.crf.tr.tools.Strings;
 import org.crf.tr.ui.images.Images;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,12 +97,8 @@ public final class NewProjectBuilder {
 
 
 	public static final class ValueConstraints {
-		static final boolean isEmpty(final String value) {
-			return (value == null || value.isEmpty());
-		}
-
 		static final boolean isEmpty(final String field, final String name) {
-			if (isEmpty( field )) {
+			if (Strings.isEmpty( field )) {
 				handleNull( name );
 				return true;
 			}

@@ -4,6 +4,8 @@
 package org.crf.tr.model;
 
 import static java.lang.String.format;
+
+import org.crf.tr.ui.views.builders.BoostViewBuilder;
 import org.crf.tr.ui.views.builders.ViewBuilder;
 
 /**
@@ -68,9 +70,7 @@ public final class Project {
 		Clover( tr -> {
 			//ELABORATEME:
 		})
-	   ,Boost( tr -> {
-		   //ELABORATEME:
-	   });
+	   ,Boost(new BoostViewBuilder( ));
 		
 		TestFramework(final ViewBuilder builder) {
 			this._viewBuilder = builder;
