@@ -5,8 +5,8 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import org.crf.tr.commands.Executor;
+import org.crf.tr.model.Project;
 import org.crf.tr.model.Project.TestFramework;
-import org.crf.tr.mongoDB.model.ProjectModel;
 import org.crf.tr.ui.factories.builders.ShellBuilder;
 
 import com.mongodb.BasicDBObject;
@@ -32,7 +32,7 @@ public class MongoDBJDBC {
 		DBCollection col = getCollection(db, "projects");
 		
         //create project example
-//		ProjectModel project = createProject(123, "json clover", TestFramework.Boost);
+//		Project project = new Project(123, "json clover", TestFramework.Boost);
 //		DBObject doc = createDBObject(project);
 //		WriteResult result = insertCollection(col, doc);
 //		System.out.println(result.getUpsertedId());
@@ -45,23 +45,16 @@ public class MongoDBJDBC {
 		mongo.close();
 	}
 	
-	private static DBObject createDBObject(ProjectModel project) {
+	private static DBObject createDBObject(Project project) {
         BasicDBObjectBuilder docBuilder = BasicDBObjectBuilder.start();
         
         //If we don’t provide id, MongoDB will create one for us
         //docBuilder.append("_id", project.getId());
-        docBuilder.append("name", project.getName());
-        docBuilder.append("role", project.getFrameWork().toString());
+        docBuilder.append("name", project.name());
+        docBuilder.append("role", project.framework().toString());
         return docBuilder.get();
     }
  
-    private static ProjectModel createProject(int id, String name, TestFramework tf) {
-    	ProjectModel p = new ProjectModel();
-        p.setId(id);
-        p.setName(name);
-        p.setFrameWork(tf);
-        return p;
-    }
 	
 	public static DB connectToDB(String URL, int Port){
 		DB db = null;
