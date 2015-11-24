@@ -1,26 +1,19 @@
 package org.crf.tr.mongoDB;
 
-import java.io.InputStream;
-import java.net.UnknownHostException;
-import java.util.List;
-
-import org.crf.tr.commands.Executor;
 import org.crf.tr.model.Project;
-import org.crf.tr.model.Project.TestFramework;
-import org.crf.tr.ui.factories.builders.ShellBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
-import com.mongodb.CommandResult;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 
 public class MongoDBJDBC {
 	static MongoClient mongo = null;
+	private static final Logger _log = LoggerFactory.getLogger( MongoDBJDBC.class );
 	
 	public static void startMongo(){
 
@@ -63,10 +56,10 @@ public class MongoDBJDBC {
 			mongo = new MongoClient( URL, Port );
 			db = mongo.getDB("tr");
 			
-			System.out.println("Connected successfully");
-			
+			_log.debug("Connected to mongoDB successfully");
+
 		}catch(Exception e){
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			_log.error( e.getClass().getName() + ": " + e.getMessage() );
 		}
 		return db;
 	}
@@ -77,10 +70,10 @@ public class MongoDBJDBC {
 		try{
 			
 			 collection = db.getCollection(coll);
-	         System.out.println("Collection " + coll + " selected successfully");
+	         _log.debug("Collection " + coll + " selected successfully");
 	         
 		}catch(Exception e){
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			_log.error( e.getClass().getName() + ": " + e.getMessage() );
 		}
 		return collection;
 	}
@@ -92,7 +85,7 @@ public class MongoDBJDBC {
 			wr = coll.insert(obj);
 			
 		}catch(Exception e){
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			_log.error( e.getClass().getName() + ": " + e.getMessage() );
 		}
 		return wr;
 	}
@@ -103,7 +96,7 @@ public class MongoDBJDBC {
 			coll.remove(obj);
 			
 		}catch(Exception e){
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			_log.error( e.getClass().getName() + ": " + e.getMessage() );
 		}
 	}
 
