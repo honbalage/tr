@@ -21,3 +21,38 @@
   -fx-effect: dropshadow( gaussian, dimgray, 10, 0.1, 1, 1 );
 }
 
+.crf-project-header {
+  -fx-background-color: #336699;
+}
+
+.crf-project-name-header-label {
+  -fx-text-fill: #ffffff;
+  -fx-font-weight: bold;
+  -fx-font-size: 31;
+}
+
+.crf-project-fw-type-header-label {
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 31;
+}
+
+
+.crf-report-view-header {
+  -fx-background-color: deepskyblue;
+}
+
+.crf-report-view-header-label {
+  -fx-text-fill: white;
+}
+
+.crf-report-view-header-text {
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-font-size: 13;
+}
+
+.crf-report-view-footer {
+  -fx-border-color: lightgray;
+  -fx-border-width: 1;
+}
+
