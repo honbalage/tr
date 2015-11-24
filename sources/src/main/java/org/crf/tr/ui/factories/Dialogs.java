@@ -20,7 +20,7 @@ import org.crf.tr.ui.factories.builders.ShellBuilder;
  * @author cvirtue
  * @version "%I, %G"
  */
-public final class DialogFactory {
+public final class Dialogs {
 
 	public static final Dialog<Project> makeManageProjectFor(final TestReporter owner) {
 		return ManageProjectBuilder.buildFor( owner );

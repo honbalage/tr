@@ -20,8 +20,8 @@ import org.crf.tr.model.Project;
 
 import org.crf.tr.services.factories.Services;
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
-import org.crf.tr.ui.factories.LayoutFactory;
-import org.crf.tr.ui.factories.MenuBarFactory;
+import org.crf.tr.ui.factories.Layouts;
+import org.crf.tr.ui.factories.MenuBars;
 import org.crf.tr.ui.images.Images;
 import org.crf.tr.ui.views.ProjectHeader;
 import org.crf.tr.ui.views.Viewable;
@@ -75,9 +75,9 @@ public final class TestReporter extends Application {
 	public final void start(final Stage primary) {
 		this._primary = primary;
 		final BorderPane main = new BorderPane( );
-		main.setTop(MenuBarFactory.makeFor( this ));
-		_center = LayoutFactory.makeCenterFor( this );
-		_container = LayoutFactory.makeContainerFor( this );
+		main.setTop(MenuBars.makeFor( this ));
+		_center = Layouts.makeCenterFor( this );
+		_container = Layouts.makeContainerFor( this );
 		main.setCenter( _center );
 		
 		primary.setTitle( "Test Reporter" );

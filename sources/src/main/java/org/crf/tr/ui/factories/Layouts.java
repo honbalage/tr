@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
  * @author cvirtue
  * @version "%I, %G"
  */
-public final class LayoutFactory {
+public final class Layouts {
 
 	public static final VBox makeCenterFor(final TestReporter owner) {
 		final VBox center = new VBox( );

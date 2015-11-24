@@ -31,13 +31,13 @@ import org.slf4j.LoggerFactory;
  * @author cvirtue
  * @version "%I, %G"
  */
-public final class MenuBarFactory {
+public final class MenuBars {
 
 	static final Menu makeFileMenuFor(final TestReporter owner) {
 		final Menu file = new Menu( "File" );
 		final MenuItem newProject = new MenuItem("New", Images.get( "add-icon.png" ));
 		newProject.setOnAction( evt -> {
-			final Dialog<Project> dialog = DialogFactory.makeNewProjectFor( owner );
+			final Dialog<Project> dialog = Dialogs.makeNewProjectFor( owner );
 			final Optional<Project> proj = dialog.showAndWait();
 			if (! proj.isPresent()) return;
 			try {
@@ -51,7 +51,7 @@ public final class MenuBarFactory {
 
 		final MenuItem open = new MenuItem("Manage", Images.get( "mng-icon.gif" ));
 		open.setOnAction( evt -> {
-			final Dialog<Project> dialog = DialogFactory.makeManageProjectFor( owner );
+			final Dialog<Project> dialog = Dialogs.makeManageProjectFor( owner );
 			final Optional<Project> proj = dialog.showAndWait();
 			if (! proj.isPresent()) return;
 			owner.currentProject(proj.get( ));
@@ -67,7 +67,7 @@ public final class MenuBarFactory {
 
 		final MenuItem importItem = new MenuItem("Import", Images.get( "import-icon.png" ));
 		importItem.setOnAction( evt -> {
-			final Optional<Dialog<File>> dialog = DialogFactory.makeImportTestOutputFor( owner );
+			final Optional<Dialog<File>> dialog = Dialogs.makeImportTestOutputFor( owner );
 			if (! dialog.isPresent()) return;
 
 			final Optional<File> testOutput = dialog.get( ).showAndWait( );
@@ -102,7 +102,7 @@ public final class MenuBarFactory {
 		final Menu run = new Menu( "Run" );
 		final MenuItem shellCommand = new MenuItem("Shell Command", Images.get( "shell-icon.png" ));
 		shellCommand.setOnAction( evt -> {
-			final Dialog<String> shellDialog = DialogFactory.makeShellFor( owner );
+			final Dialog<String> shellDialog = Dialogs.makeShellFor( owner );
 		    shellDialog.show( );
 		});
 		shellCommand.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+R" ));
@@ -126,5 +126,5 @@ public final class MenuBarFactory {
 		return menuBar;
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger( MenuBarFactory.class );
+	private static final Logger _log = LoggerFactory.getLogger( MenuBars.class );
 }
