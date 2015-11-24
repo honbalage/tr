@@ -4,6 +4,8 @@
 package org.crf.tr.ui.views;
 
 import org.crf.tr.tools.Strings;
+
+import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 
 /**
@@ -24,7 +26,8 @@ public final class Styles {
 	
 	static final VBox applyCommons(final VBox view) {
 		view.setMinWidth( 590 );
-		view.setSpacing( 13 );
+		view.setSpacing( 7 );
+		view.setPadding(new Insets( 13 ));
 
 		final String style = view.getStyle();
 		view.setStyle(Strings.isEmpty( style ) ? _commonStyling : ( style + _commonStyling ));

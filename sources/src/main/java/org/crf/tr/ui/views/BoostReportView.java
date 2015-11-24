@@ -3,34 +3,37 @@
  */
 package org.crf.tr.ui.views;
 
-import org.crf.tr.TestReporter;
-import org.crf.tr.model.BoostReport;
-import org.crf.tr.services.BoostReportService;
-import org.crf.tr.services.factories.Services;
+import java.nio.file.Path;
 
-import javafx.scene.layout.VBox;
+import org.crf.tr.TestReporter;
+
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 /**
  *
  * @author cvirtue
  * @version "%I, %G"
  */
-public final class BoostReportView extends VBox implements Viewable {
+public final class BoostReportView extends ReportView {
 
 	public BoostReportView(final TestReporter owner) {
-		super( );
-		_owner = owner;
+		super( owner );
 //		_service = Services.makeForBoostReports( );
-		Styles.applyForReportView( this );
-
 	}
 
 	@Override
-	public void refresh() {
-		// TODONE Auto-generated method stub
+	protected final Pane buildContentSection(ReportView view, TestReporter owner) {
+		final GridPane content = new GridPane( );
+		///ELABORATEME: setup content of the grid..
+		return content;
+	}
+
+	@Override
+	public final void print(final Path outputPdf) {
+		
 	}
 
 //	private BoostReport _report;
-	private final TestReporter _owner;
 //	private final BoostReportService _service;
 }
