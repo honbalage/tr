@@ -7,12 +7,11 @@ import java.util.List;
 
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
+import org.crf.tr.ui.images.Images;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import static java.lang.String.format;
@@ -32,15 +31,13 @@ public final class ProjectHeader extends HBox implements Viewable {
 		final Project project = owner.currentProject( );
 		final VBox center = owner.center();
 
-		final ProjectHeader header = new ProjectHeader();
+		final ProjectHeader header = Styles.applyOn(new ProjectHeader( ));
 		header.setPadding(new Insets( 7, 6, 7, 6 ));
 		header.setSpacing( 13 );
-		header.setStyle( "-fx-background-color: #336699;" );
-		final Image jlogo = new Image( "file:src/main/resources/images/proj-icon.png", 42, 42, false, true );
-		final ImageView jenkins = new ImageView( jlogo );
-		header.getChildren().add( 0, jenkins );
-		header.getChildren().add( 1, makeStyledLabel(project.name( ), "-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 31;" ));
-		header.getChildren().add( 2, makeStyledLabel(format( "[%s]", project.framework().toString( )), "-fx-text-fill: #ffffff; -fx-font-size: 31;"));
+		header.getChildren().add( 0, Images.get( "proj-icon.png", 42, 42 ));
+		header.getChildren().add( 1, Styles.applyOn(new Label(project.name( )), "crf-project-name-header-label" ));
+		final Label l = new Label(format( "[%s]", project.framework().toString( )));
+		header.getChildren().add( 2, Styles.applyOn( l, "crf-project-fw-type-header-label" ));
 
 		final List<Node> items = center.getChildren();
 		if (items.isEmpty())
@@ -50,16 +47,6 @@ public final class ProjectHeader extends HBox implements Viewable {
 		return header;
 	}
 
-	static final Label makeStyledLabel(final String text) {
-		return makeStyledLabel( text, "-fx-text-fill: #ffffff; -fx-font-size: 16;" );
-	}
-	
-	static final Label makeStyledLabel(final String text, final String style) {
-		final Label label = new Label( text );
-		label.setStyle( style );
-		return label;
-	}
-	
 	ProjectHeader() {
 		super( );
 	}

@@ -5,6 +5,7 @@ package org.crf.tr.ui.views;
 
 
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
@@ -31,6 +32,21 @@ public final class Styles {
 		return button;
 	}
 
+	public static final ProjectHeader applyOn(final ProjectHeader header) {
+		header.getStyleClass().add( _projectHeaderClass );
+		return header;
+	}
+
+	public static final Node applyOn(final Node node, final String cls) {
+		node.getStyleClass().add( cls );
+		return node;
+	}
+
+	public static final Node applyOn(final Node node, final String... classes) {
+		node.getStyleClass().addAll( classes );
+		return node;
+	}
+
 	public static final VBox applyOnCoverageView(final VBox view) {
 		return applyCommons( view );
 	}
@@ -43,6 +59,7 @@ public final class Styles {
 		return view;
 	}
 
+	public static final String _projectHeaderClass = "crf-project-header";
 	public static final String _buttonClass = "crf-button";
 	public static final String _commonsClass = "crf-commons";
 }

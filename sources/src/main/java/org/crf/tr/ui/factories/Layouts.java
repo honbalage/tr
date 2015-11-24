@@ -41,7 +41,7 @@ public final class Layouts {
 
 	public static final HBox makeContainerFor(final TestReporter owner) {
 		final HBox container = new HBox( );
-		container.setPadding(new Insets( 13, 7, 7, 7 ));
+		container.setPadding(new Insets( 7, 7, 7, 7 ));
 		final VBox center = owner.center();
 		center.getChildren().add( 1, container );
 		return container;

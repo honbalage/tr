@@ -3,7 +3,7 @@
  */
 package org.crf.tr.ui.views;
 
-import static org.crf.tr.ui.views.ProjectHeader.makeStyledLabel;
+import static org.crf.tr.ui.views.Styles.applyOn;
 
 import java.nio.file.Path;
 
@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
@@ -61,14 +62,12 @@ public abstract class ReportView extends VBox implements Viewable {
 		header.setPadding(new Insets( 4, 4, 7, 4 ));
 		final Project current = owner.currentProject();
 		
-		final String labelStyle = "-fx-text-fill: #ffffff;";
-		final String textStyle = labelStyle + " -fx-font-weight: bold; -fx-font-size: 13";
-		header.add( makeStyledLabel( "Project: ", labelStyle ) , 1, 1 );
-		header.add( makeStyledLabel(current.name( ), textStyle), 2, 1 );
-		header.add( makeStyledLabel( "Test FW: ", labelStyle ), 1, 2 );
-		header.add( makeStyledLabel(current.framework().toString( ), textStyle), 2, 2 );
+		header.add( applyOn(new Label( "Project: " ), "crf-report-view-header-label" ) , 1, 1 );
+		header.add( applyOn(new Label(current.name( )), "crf-report-view-header-text" ), 2, 1 );
+		header.add( applyOn(new Label( "Test FW: " ), "crf-report-view-header-label" ), 1, 2 );
+		header.add( applyOn(new Label(current.framework().toString( )), "crf-report-view-header-text" ), 2, 2 );
 
-		header.setStyle( "-fx-background-color: deepskyblue;" );
+		applyOn( header, "crf-report-view-header" );
 		view.getChildren().add( header );
 	}
 
@@ -97,7 +96,7 @@ public abstract class ReportView extends VBox implements Viewable {
 		export.setMinWidth( 130 );
 		export.setTooltip(new Tooltip( "Press to export to a .pdf file." ));
 		footer.getChildren().add( export );
-		footer.setStyle( "-fx-border-color: lightgray; -fx-border-width: 1;" );
+		applyOn( footer, "crf-report-view-footer" );
 		view.getChildren().add( footer );
 	}
 	
