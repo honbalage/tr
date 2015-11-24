@@ -16,6 +16,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  *
@@ -30,12 +31,22 @@ public final class Layouts {
 
 		final ImageView iview = Images.get("bcg.jpg", owner.width(), owner.height( ));
 		iview.setOpacity( 0.01 );
+
 		final BackgroundImage bcgImage = new BackgroundImage( iview.getImage()
 				                                             ,BackgroundRepeat.NO_REPEAT
 				                                             ,BackgroundRepeat.NO_REPEAT
-				                                             ,BackgroundPosition.DEFAULT
+				                                             ,BackgroundPosition.CENTER
 				                                             ,BackgroundSize.DEFAULT);
 		center.setBackground(new Background( bcgImage ));
+		final Stage primary = owner.primary();
+		primary.widthProperty().addListener(( value, oldWidth, newWidth ) -> {
+			final double scale = newWidth.doubleValue() / oldWidth.doubleValue();
+			iview.setFitWidth(newWidth.doubleValue( ));
+			iview.setScaleX( scale );
+		});
+		primary.heightProperty().addListener(( value, oldHeight, newHeight ) -> {
+			iview.setFitHeight(newHeight.doubleValue( ));
+		});
 		return center;
 	}
 
