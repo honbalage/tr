@@ -45,7 +45,8 @@ public final class NewProjectBuilder {
 		dialog.initModality( Modality.APPLICATION_MODAL );
 
 		final TextField projectNameField = new TextField( );
-		final ComboBox<String> frameworkBox = makeComboFor(Project.TestFramework.values( ));
+		projectNameField.setMinWidth( 130 );
+		final ComboBox<String> frameworkBox = makeComboFor( projectNameField, Project.TestFramework.values( ));
         final Pane content = makeCreateProjectPane( owner, projectNameField, frameworkBox );
 		dialog.getDialogPane().setContent( content );
         
@@ -75,11 +76,13 @@ public final class NewProjectBuilder {
 		return dialog;
 	}
 
-	static final ComboBox<String> makeComboFor(final Project.TestFramework[] values) {
-		return new ComboBox<>(FXCollections.observableArrayList(
-				                              Arrays.stream(Project.TestFramework.values())
-                                                    .map(v -> v.toString( ) )
-                                                    .collect(Collectors.toList())));
+	static final ComboBox<String> makeComboFor(final TextField nameField, final Project.TestFramework[] values) {
+		final ComboBox<String> combo = new ComboBox<>( FXCollections.observableArrayList(
+				                                        Arrays.stream(Project.TestFramework.values())
+                                                              .map(v -> v.toString( ) )
+                                                              .collect(Collectors.toList())));
+		combo.setMinWidth(nameField.getMinWidth( ) * 1.5);
+		return combo;
 	}
 
 	static final Pane makeCreateProjectPane(final TestReporter owner, final Node... nodes) {
