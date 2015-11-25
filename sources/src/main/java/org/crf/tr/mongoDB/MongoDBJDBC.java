@@ -44,7 +44,7 @@ public class MongoDBJDBC {
         //If we don’t provide id, MongoDB will create one for us
         //docBuilder.append("_id", project.getId());
         docBuilder.append("name", project.name());
-        docBuilder.append("role", project.framework().toString());
+        docBuilder.append("framework", project.framework().toString());
         return docBuilder.get();
     }
  

@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
 
 public class Parser {
 
-	public static void readXMLtoArray(Document doc)
+	public static ArrayList<Project> readXMLtoArray(Document doc)
 	{
 	    if(doc != null)
 	    {
@@ -83,7 +83,11 @@ public class Parser {
 	            project.setPackages(packages);
 	            projects.add(project);
 	        }
+	        
+	        return projects;
 	    }
+	    
+	    return null;
 	}
 	
 	public static Document parseXML(String filePath) throws ParserConfigurationException, SAXException, IOException
