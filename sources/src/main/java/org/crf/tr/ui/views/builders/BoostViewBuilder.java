@@ -40,14 +40,6 @@ public final class BoostViewBuilder implements ViewBuilder {
 		applyOn( chartsHolder, "crf-charts-view-holder" );
 		chartsHolder.getChildren().add(views.get( 1 ));
 		children.add( chartsHolder );
-
-//        final HBox chartsHolder = new HBox();
-//        children.add( chartsHolder );
-//        //for i in [1, 2): chartsHolder.add(views[ i ])
-//
-//		final List<Node> items = center.getChildren();
-//		if (items.size() < 2) items.add( 1, container );
-//		else items.set( 1 , container );
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger( BoostViewBuilder.class );

@@ -4,12 +4,10 @@
 package org.crf.tr.ui.views.builders;
 
 import static org.crf.tr.ui.views.Styles.applyOn;
-import org.crf.tr.TestReporter;
-import org.crf.tr.ui.views.Styles;
-
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import org.crf.tr.TestReporter;
 
 /**
  *
