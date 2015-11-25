@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 public final class Styles {
 
 	public static final VBox applyOnReportView(final VBox view) {
-		view.setMinHeight( 770 );
+		applyOn( view, "crf-report-view" );
 		return applyCommons( view );
 	}
 

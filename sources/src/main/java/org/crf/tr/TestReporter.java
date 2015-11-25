@@ -75,7 +75,7 @@ public final class TestReporter extends Application {
 
 	///TODONE: remove
 	private static final void setupTestProject(final TestReporter tr) {
-		final Project p = new Project( "First", Project.TestFramework.valueOf( "Boost" ));
+		final Project p = new Project( "First", Project.TestFramework.valueOf( "Clover" ));
 		try {
 			Services.makeForProjects().store( p );
 		} catch (EntityAlreadyExistsException e) {
@@ -129,8 +129,8 @@ public final class TestReporter extends Application {
 
 ///Members...
 	private static final Logger _log = LoggerFactory.getLogger( TestReporter.class );
-	private final int _width  = 1350;
-	private final int _height = 880;
+	private final int _width  = 1400;
+	private final int _height = 930;
 
 	private VBox _center;
 	private HBox _container;

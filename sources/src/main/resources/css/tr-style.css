@@ -22,7 +22,7 @@
 
 
 .crf-commons {
-  -fx-min-width: 600;
+  -fx-min-width: 650;
   -fx-border-color: deepskyblue;
   -fx-border-width: 3;
   -fx-background-color: white;
@@ -76,12 +76,17 @@
   -fx-border-width: 1;
 }
 
+.crf-report-view {
+  -fx-min-height: 830;
+}
+
 .crf-trends-view {
-  -fx-min-width: 700;
+  -fx-min-width: 650;
 }
 
 .crf-trends-view-header {
-  -fx-min-height: 77;
+  -fx-background-color: deepskyblue;
+  -fx-min-height: 50;
 }
 
 .crf-charts-view-holder {
@@ -89,6 +94,6 @@
 }
 
 .crf-trends-view-chart {
-  -fx-min-width: 670;
+  -fx-min-width: 700;
 }
 

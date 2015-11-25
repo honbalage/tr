@@ -3,6 +3,8 @@
  */
 package org.crf.tr.ui.views.builders;
 
+
+
 import static org.crf.tr.ui.views.Styles.applyOn;
 import org.crf.tr.ui.views.TestsTrendView;
 import javafx.scene.layout.HBox;
