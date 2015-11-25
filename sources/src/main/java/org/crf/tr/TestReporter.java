@@ -9,15 +9,6 @@ import java.util.List;
 import org.crf.tr.model.Project;
 
 
-//import org.crf.tr.mongoDB.MongoDBJDBC;
-
-
-//import com.mongodb.DB;
-//import com.mongodb.DBCollection;
-//
-//import com.mongodb.DBObject;
-
-
 import org.crf.tr.mongoDB.MongoDBJDBC;
 import org.crf.tr.services.factories.Services;
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
@@ -44,7 +35,6 @@ import org.slf4j.Logger;
  */
 public final class TestReporter extends Application {
 
-//	static MongoDBJDBC mongoDB = new MongoDBJDBC();
 	/**
 	 * @param args
 	 */
@@ -60,23 +50,6 @@ public final class TestReporter extends Application {
 	    }, "Shutdown Mongo thread"));
 	}
 
-//	static final Menu makeMongoDBMenu() {
-//		final Menu mongo = new Menu( "MongoDB" );
-//	    final MenuItem test = new MenuItem( "Test" );
-//	    test.setOnAction( evt -> {
-//	    	// TODONE: 
-//	    	DB db = mongoDB.connectToDB("localhost", 27017);
-//	    	if( mongoDB.authenticateDB(db, "user", "password") ){
-//	    		DBCollection DBColl = mongoDB.getCollection(db, "coll");
-//	    		/*DBObject obj = new BasicDBObject("_id", "jo");
-//	    		mongoDB.insertCollection(DBColl, obj); 
-//	    		mongoDB.removeCollection(DBColl, obj);*/
-//	    	}
-//	    });
-//	    mongo.getItems().addAll( test );
-//		return mongo;
-//	}
-	
 	/**
 	 * @param primary
 	 * */
