@@ -129,7 +129,7 @@ public final class TestReporter extends Application {
 
 ///Members...
 	private static final Logger _log = LoggerFactory.getLogger( TestReporter.class );
-	private final int _width  = 1280;
+	private final int _width  = 1350;
 	private final int _height = 880;
 
 	private VBox _center;

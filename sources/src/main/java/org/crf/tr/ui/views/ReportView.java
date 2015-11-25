@@ -3,8 +3,8 @@
  */
 package org.crf.tr.ui.views;
 
+import static org.crf.tr.ui.views.Styles.applyOnReportView;
 import static org.crf.tr.ui.views.Styles.applyOn;
-
 import java.nio.file.Path;
 
 import org.crf.tr.TestReporter;
@@ -40,7 +40,7 @@ public abstract class ReportView extends VBox implements Viewable {
 	}
 
 	private final void initWidgets( ) {
-		Styles.applyOnReportView( this );
+		applyOnReportView( this );
 		buildHeaderSection(  this, _owner );
 		/// content section is in a scroll bar in case it would not fit ;)
 		this.getChildren().add(asScrollable(buildContentSection( this, _owner )));
@@ -61,7 +61,7 @@ public abstract class ReportView extends VBox implements Viewable {
 		header.setVgap( 3 );
 		header.setPadding(new Insets( 4, 4, 7, 4 ));
 		final Project current = owner.currentProject();
-		
+
 		header.add( applyOn(new Label( "Project: " ), "crf-report-view-header-label" ) , 1, 1 );
 		header.add( applyOn(new Label(current.name( )), "crf-report-view-header-text" ), 2, 1 );
 		header.add( applyOn(new Label( "Test FW: " ), "crf-report-view-header-label" ), 1, 2 );
@@ -79,7 +79,7 @@ public abstract class ReportView extends VBox implements Viewable {
 		final TitledPane comments = new TitledPane( "Comments", view.commentArea( ));
 		comments.setMinHeight( 70 );
 		comments.setCollapsible( false );
-		Styles.applyOn( comments, "crf-report-view-comments-wrapper" );
+		applyOn( comments, "crf-report-view-comments-wrapper" );
 
 		view.getChildren().add( comments );
 	}
@@ -94,7 +94,7 @@ public abstract class ReportView extends VBox implements Viewable {
 			_log.info( "Report exported.." );
 		});
 		export.setMinWidth( 130 );
-		export.setTooltip(new Tooltip( "Press to export to a .pdf file." ));
+		export.setTooltip(new Tooltip( "Press to export to a PDF file." ));
 		footer.getChildren().add( export );
 		applyOn( footer, "crf-report-view-footer" );
 		view.getChildren().add( footer );

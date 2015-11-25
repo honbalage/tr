@@ -34,6 +34,5 @@ public final class BoostReportView extends ReportView {
 		
 	}
 
-//	private BoostReport _report;
 //	private final BoostReportService _service;
 }

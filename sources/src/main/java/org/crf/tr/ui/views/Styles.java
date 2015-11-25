@@ -51,8 +51,7 @@ public final class Styles {
 		return applyCommons( view );
 	}
 
-	static final VBox applyCommons(final VBox view) {
-		view.setMinWidth( 590 );
+	public static final VBox applyCommons(final VBox view) {
 		view.setSpacing( 7 );
 		view.setPadding(new Insets( 13 ));
 		view.getStyleClass().add( _commonsClass );
