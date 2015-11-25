@@ -1,10 +1,10 @@
 /**
- * BoostViewBuilder.java
+ * CloverViewBuilder.java
  */
 package org.crf.tr.ui.views.builders;
 
-
 import static org.crf.tr.ui.views.Styles.applyOn;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import org.crf.tr.TestReporter;
-import org.crf.tr.ui.views.BoostReportView;
+import org.crf.tr.ui.views.CloverReportView;
 import org.crf.tr.ui.views.TestsTrendView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,15 +23,15 @@ import org.slf4j.LoggerFactory;
  * @author cvirtue
  * @version "%I, %G"
  */
-public final class BoostViewBuilder implements ViewBuilder {
+public final class CloverViewBuilder implements ViewBuilder {
 
 	@Override
 	public void buildViewsFor(final TestReporter owner) {
-		_log.info( "Building view for boost.." ); //< TODONE: remove
+		_log.info( "Building view for clover.." ); //< TODONE: remove
 
 		final HBox container = owner.container();
 		container.setSpacing( 7 );
-		final List<Node> views = Arrays.asList(new BoostReportView( owner ), new TestsTrendView( owner ));
+		final List<Node> views = Arrays.asList(new CloverReportView( owner ), new TestsTrendView( owner ));
 		final List<Node> children = container.getChildren();
 		children.clear();
 		children.add(views.get( 0 ));
