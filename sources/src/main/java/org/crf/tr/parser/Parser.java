@@ -1,6 +1,10 @@
 package org.crf.tr.parser;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,15 +17,19 @@ import org.crf.tr.parser.classes.Project;
 import org.crf.tr.parser.classes.ProjectClass;
 import org.crf.tr.parser.classes.ProjectFile;
 import org.crf.tr.parser.classes.ProjectPackage;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class Parser {
 
-	public static ArrayList<Project> readXMLtoArray(Document doc)
+	public static ArrayList<Project> readJSONtoArray(Document doc)
 	{
 	    if(doc != null)
 	    {
@@ -36,6 +44,7 @@ public class Parser {
 	            Element projectE = (Element) projectNode;
 	            project.setName(projectE.getAttribute("name"));
 	            Element metricE = (Element) projectE.getElementsByTagName("metrics").item(0);
+	            System.out.println(i);
 	            Metric m = new Metric(Integer.parseInt(metricE.getAttribute("elements")), Integer.parseInt(metricE.getAttribute("coveredelements")), Integer.parseInt(metricE.getAttribute("methods")), Integer.parseInt(metricE.getAttribute("coveredmethods")), Integer.parseInt(metricE.getAttribute("statements")), Integer.parseInt(metricE.getAttribute("coveredstatements")));
 	            project.setMetric(m);
 	            
@@ -82,20 +91,42 @@ public class Parser {
 	            }
 	            project.setPackages(packages);
 	            projects.add(project);
+	            System.out.print(project.toString());
 	        }
-	        
 	        return projects;
 	    }
 	    
 	    return null;
 	}
 	
-	public static Document parseXML(String filePath) throws ParserConfigurationException, SAXException, IOException
-	{
-	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-	    DocumentBuilder db = dbf.newDocumentBuilder();
-	    Document doc = db.parse(filePath);
-	    doc.getDocumentElement().normalize();
-	    return doc;
+	public static Document parseXML(String XML){
+		try {
+		    DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		    InputSource is = new InputSource();
+		    is.setCharacterStream(new StringReader(XML));
+		    Document doc = db.parse(is);
+		    doc.getDocumentElement().normalize();
+		    System.out.println("parse json done");
+		    return doc;
+		}
+		catch ( ParserConfigurationException | SAXException | IOException e){
+			System.out.println(e.toString());
+		}
+		return null;
+	}
+	
+	public static String XMLtoString(String filePath){
+		try {BufferedReader br = new BufferedReader(new FileReader(new File(filePath)));
+			String line;
+			StringBuilder sb = new StringBuilder();
+			while((line=br.readLine())!= null){
+			    sb.append(line.trim());
+			}
+			return sb.toString();
+        } catch (JSONException | IOException je) {
+            System.out.println(je.toString());
+        }
+		
+		return null;
 	}
 }
