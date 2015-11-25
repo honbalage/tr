@@ -43,7 +43,7 @@ public class MongoDBJDBC {
 		
 		db = connectToDB("localhost", 27017);
 		
-//		db.getCollection("projects").drop();
+		db.getCollection("projects").drop();
 //		DBCollection col = getCollection(db, "projects");
 
 

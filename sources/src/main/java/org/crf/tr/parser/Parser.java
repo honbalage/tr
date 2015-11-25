@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.crf.tr.TestReporter;
 import org.crf.tr.parser.classes.Method;
 import org.crf.tr.parser.classes.Metric;
 import org.crf.tr.parser.classes.Project;
@@ -20,6 +21,8 @@ import org.crf.tr.parser.classes.ProjectPackage;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -44,7 +47,6 @@ public class Parser {
 	            Element projectE = (Element) projectNode;
 	            project.setName(projectE.getAttribute("name"));
 	            Element metricE = (Element) projectE.getElementsByTagName("metrics").item(0);
-	            System.out.println(i);
 	            Metric m = new Metric(Integer.parseInt(metricE.getAttribute("elements")), Integer.parseInt(metricE.getAttribute("coveredelements")), Integer.parseInt(metricE.getAttribute("methods")), Integer.parseInt(metricE.getAttribute("coveredmethods")), Integer.parseInt(metricE.getAttribute("statements")), Integer.parseInt(metricE.getAttribute("coveredstatements")));
 	            project.setMetric(m);
 	            
@@ -91,7 +93,6 @@ public class Parser {
 	            }
 	            project.setPackages(packages);
 	            projects.add(project);
-	            System.out.print(project.toString());
 	        }
 	        return projects;
 	    }
@@ -106,11 +107,10 @@ public class Parser {
 		    is.setCharacterStream(new StringReader(XML));
 		    Document doc = db.parse(is);
 		    doc.getDocumentElement().normalize();
-		    System.out.println("parse json done");
 		    return doc;
 		}
 		catch ( ParserConfigurationException | SAXException | IOException e){
-			System.out.println(e.toString());
+			_log.error(e.toString());
 		}
 		return null;
 	}
@@ -124,9 +124,11 @@ public class Parser {
 			}
 			return sb.toString();
         } catch (JSONException | IOException je) {
-            System.out.println(je.toString());
+            _log.error(je.toString());
         }
 		
 		return null;
 	}
+	
+	private static final Logger _log = LoggerFactory.getLogger( Parser.class );
 }
