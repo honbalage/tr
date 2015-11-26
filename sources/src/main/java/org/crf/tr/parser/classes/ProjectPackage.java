@@ -25,8 +25,8 @@ public class ProjectPackage {
 	public ProjectFile getFile() {
 		return file;
 	}
-	public void setFile(ProjectFile files) {
-		this.file = files;
+	public void setFile(ProjectFile file) {
+		this.file = file;
 	}
 	
 	@Override

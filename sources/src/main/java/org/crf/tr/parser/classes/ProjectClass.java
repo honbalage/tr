@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class ProjectClass {
 	private String name;
 	private Metric metric;
-	private ArrayList<Method> methods = new ArrayList<Method>();
+//	private ArrayList<Method> methods = new ArrayList<Method>();
 	
 	public String getName() {
 		return name;
@@ -21,12 +21,12 @@ public class ProjectClass {
 	public void setMetric(Metric metric) {
 		this.metric = metric;
 	}
-	public ArrayList<Method> getMethods() {
-		return methods;
-	}
-	public void setMethods(ArrayList<Method> methods) {
-		this.methods = methods;
-	}
+//	public ArrayList<Method> getMethods() {
+//		return methods;
+//	}
+//	public void setMethods(ArrayList<Method> methods) {
+//		this.methods = methods;
+//	}
 	
 	@Override
 	public final String toString() {

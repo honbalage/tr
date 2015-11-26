@@ -21,6 +21,9 @@ public class Metric {
 		this.statements = parseInt5;
 		this.coveredStatements = parseInt6;
 	}
+	public Metric() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getElements() {
 		return elements;
 	}

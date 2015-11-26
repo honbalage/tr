@@ -7,6 +7,8 @@ import java.util.Date;
 
 
 
+
+
 import org.crf.tr.model.Project;
 import org.crf.tr.model.Project.TestFramework;
 import org.crf.tr.parser.Parser;
@@ -32,18 +34,32 @@ import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Sorts.ascending;
 import static java.util.Arrays.asList;
 
+
+import org.bson.Document;
+
+import com.mongodb.Block;
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoDatabase;
+
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Sorts.ascending;
+import static java.util.Arrays.asList;
+
 public class MongoDBJDBC {
-	static MongoClient mongo = null;
-	static DB db = null;
+	static MongoClient mongo = new MongoClient();
+	static MongoDatabase db = null;
 	private static final Logger _log = LoggerFactory.getLogger( MongoDBJDBC.class );
 	
 	public static void startMongo(){
 
 		
 		
-		db = connectToDB("localhost", 27017);
+		//db = connectToDB("localhost", 27017);
 		
-		db.getCollection("projects").drop();
+		db = mongo.getDatabase("tr");
+		
+//		db.getCollection("projects").drop();
 //		DBCollection col = getCollection(db, "projects");
 
 
@@ -62,7 +78,12 @@ public class MongoDBJDBC {
         docBuilder.append("coverage_data", xml);
         docBuilder.append("date", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
         
-        WriteResult result = insertCollection(getCollection(db, "projects"), docBuilder.get());
+        db.getCollection("projects").insertOne(new Document()
+        		.append("name", name)
+        		.append("framework", fw)
+        		.append("coverage_data", xml)
+        		.append("date", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date())));
+        //WriteResult result = insertCollection(db, docBuilder.get());
 //		System.out.println(result.getUpsertedId());
 //		System.out.println(result.getN());
 //		System.out.println(result.isUpdateOfExisting());
@@ -70,16 +91,21 @@ public class MongoDBJDBC {
     }
 
 	public static String getProjectDBObject(String name, String date) {
+		String retString = null;
+		Document ret;
 		FindIterable<Document> iterable = db.getCollection("projects").find(
 		        new Document("date", new Document("$lt", date)).append("name", name));
-		String retString = null;
-		iterable.forEach(new Block<Document>() {
-		    @Override
-		    public void apply(final Document document) {
-		        retString = document.toString();
-		    }
-		});
-		return retString;
+		
+		return iterable.first().toJson();
+		
+//		iterable.forEach(new Block<Document>() {
+//		    @Override
+//		    public void apply(final Document document) {
+//		    	System.out.println(document);
+//		    	//retString = document.toString();
+//		    }
+//		});
+//		return retString;
 	}
  
 	
