@@ -54,6 +54,7 @@ public final class ImportTestOutputBuilder {
 		 final ButtonType imprt = new ButtonType( "Import", ButtonData.OK_DONE );
 		 final ButtonType cancel = new ButtonType( "Cancel", ButtonData.CANCEL_CLOSE );
 		 final DialogPane dpane = dialog.getDialogPane();
+		 dpane.getStylesheets().add(Styles.pathOf( "import-d-style.css" ));
 		 dpane.getButtonTypes().addAll( imprt, cancel );
 		 dialog.setResultConverter( button -> {
 			 if (cancel.equals( button )) return null;
@@ -82,11 +83,12 @@ public final class ImportTestOutputBuilder {
 		pane.setSpacing( 7 );
 		
 		final List<Node> children = pane.getChildren();
-		final Label label = new Label( "Test Output:" );
-		label.setMinHeight( 24 );
-		label.setStyle( "-fx-font-size: 14;" );
+		final Label label = Styles.<Label>applyOn( new Label( "Test Output:" ), "crf-test-output-label" );
+//		label.setMinHeight( 24 );
+//		label.setStyle( "-fx-font-size: 14;" );
 		children.add( label );
-		field.setMinWidth( 270 );
+//		field.setMinWidth( 270 );
+		Styles.<TextField>applyOn( field, "crf-test-output-field" );
 		children.add( field );
 
 		final Button browse = new Button( "Browse" );

@@ -7,8 +7,6 @@ import java.nio.file.Path;
 import java.util.List;
 
 import org.crf.tr.model.Project;
-
-
 import org.crf.tr.mongoDB.MongoDBJDBC;
 import org.crf.tr.services.factories.Services;
 import org.crf.tr.services.signals.EntityAlreadyExistsException;
@@ -16,6 +14,7 @@ import org.crf.tr.ui.factories.Layouts;
 import org.crf.tr.ui.factories.MenuBars;
 import org.crf.tr.ui.images.Images;
 import org.crf.tr.ui.views.ProjectHeader;
+import org.crf.tr.ui.views.Styles;
 import org.crf.tr.ui.views.Viewable;
 
 import javafx.application.Application;
@@ -65,7 +64,7 @@ public final class TestReporter extends Application {
 		primary.setTitle( "Test Reporter" );
 		primary.getIcons().add(Images.get( "tr-icon.png" ).getImage( ));
 		final Scene mainScene = new Scene(main, width(), height( ));
-		mainScene.getStylesheets().add( "file:src/main/resources/css/tr-style.css" );
+		mainScene.getStylesheets().addAll(Styles.pathOf( "tr-views.css" ), Styles.pathOf( "tr-commons.css" ));
 		primary.setScene( mainScene );
 
 		///TODONE: remove
@@ -129,8 +128,8 @@ public final class TestReporter extends Application {
 
 ///Members...
 	private static final Logger _log = LoggerFactory.getLogger( TestReporter.class );
-	private final int _width  = 1400;
-	private final int _height = 930;
+	private final int _width  = 1280;
+	private final int _height = 768;
 
 	private VBox _center;
 	private HBox _container;

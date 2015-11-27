@@ -16,6 +16,10 @@ import javafx.scene.layout.VBox;
  */
 public final class Styles {
 
+	public static final String pathOf(final String cssFile) {
+		return String.format( _cssResourcePathFormat, cssFile );
+	}
+
 	public static final VBox applyOnReportView(final VBox view) {
 		applyOn( view, "crf-report-view" );
 		return applyCommons( view );
@@ -37,13 +41,13 @@ public final class Styles {
 		return header;
 	}
 
-	public static final Node applyOn(final Node node, final String cls) {
-		node.getStyleClass().add( cls );
+	public static final <T extends Node> T applyOn(final T node, final String cssClass) {
+		node.getStyleClass().add( cssClass );
 		return node;
 	}
 
-	public static final Node applyOn(final Node node, final String... classes) {
-		node.getStyleClass().addAll( classes );
+	public static final <T extends Node> T applyOn(final T node, final String... cssClasses) {
+		node.getStyleClass().addAll( cssClasses );
 		return node;
 	}
 
@@ -58,7 +62,22 @@ public final class Styles {
 		return view;
 	}
 
-	public static final String _projectHeaderClass = "crf-project-header";
-	public static final String _buttonClass = "crf-button";
-	public static final String _commonsClass = "crf-commons";
+
+	public static final String projectHeaderClass() {
+		return _projectHeaderClass;
+	}
+
+	public static final String buttonClass() {
+		return _buttonClass;
+	}
+
+	public static final String commonsClass() {
+		return _commonsClass;
+	}
+
+
+	private static final String _cssResourcePathFormat = "file:src/main/resources/css/%s";
+	private static final String _projectHeaderClass = "crf-project-header";
+	private static final String _buttonClass = "crf-button";
+	private static final String _commonsClass = "crf-commons";
 }

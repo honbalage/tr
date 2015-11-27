@@ -1,32 +1,10 @@
-
+/**
+ * tr-views.css
+ */
 .crf-tr-center {
   -fx-background-color: white;
   -fx-background-image: url( "file:src/main/resources/images/bcg.jpg" );
   -fx-background-size: stretch;
-}
-
-.crf-button {
-  -fx-border-color: deepskyblue; 
-  -fx-border-width: 2; 
-  -fx-text-fill: lightseagreen; 
-  -fx-font-size: 16;
-  -fx-font-weight: bold;
-  -fx-background-color: white;
-}
-
-.crf-button:hover {
-  -fx-text-fill: lightseagreen;
-  -fx-border-color: lightseagreen; 
-  -fx-background-color: aliceblue;
-}
-
-
-.crf-commons {
-  -fx-min-width: 650;
-  -fx-border-color: deepskyblue;
-  -fx-border-width: 3;
-  -fx-background-color: white;
-  -fx-effect: dropshadow( gaussian, dimgray, 10, 0.1, 1, 1 );
 }
 
 .crf-project-header {

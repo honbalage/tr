@@ -1,0 +1,11 @@
+
+.crf-test-output-label {
+  -fx-min-height: 24;
+  -fx-pref-height: 24;
+  -fx-font-size: 14;
+}
+
+.crf-test-output-field {
+  -fx-pref-column-count: 21;
+}
+
