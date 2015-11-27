@@ -4,7 +4,7 @@
 package org.crf.tr.ui.factories.builders;
 
 import static org.crf.tr.ui.factories.builders.NewProjectBuilder.ValueConstraints.isEmpty;
-
+import static java.lang.String.format;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -46,7 +46,7 @@ public final class ImportTestOutputBuilder {
 
 		 final Dialog<File> dialog = new Dialog<>( );
 		 dialog.setTitle( "Import File" );
-		 dialog.setHeaderText( "Choose the latest test output for project " + owner.currentProject().name() + "." );
+		 dialog.setHeaderText(format( "Choose the latest test output for project %s." , owner.currentProject().name( )));
 		 
 		 final TextField filepathField = new TextField( );
 		 final Pane content = makeContentPane( owner, filepathField );
@@ -84,10 +84,7 @@ public final class ImportTestOutputBuilder {
 		
 		final List<Node> children = pane.getChildren();
 		final Label label = Styles.<Label>applyOn( new Label( "Test Output:" ), "crf-test-output-label" );
-//		label.setMinHeight( 24 );
-//		label.setStyle( "-fx-font-size: 14;" );
 		children.add( label );
-//		field.setMinWidth( 270 );
 		Styles.<TextField>applyOn( field, "crf-test-output-field" );
 		children.add( field );
 
@@ -102,6 +99,8 @@ public final class ImportTestOutputBuilder {
 		return pane;
 	}
 
+
+
 	private static final class ProjectConstraints {
 		static final boolean checkNull(final Project current) {
 			if( current == null ) {
@@ -114,12 +113,13 @@ public final class ImportTestOutputBuilder {
 			return false;
 		}
 	}
-	
+
+
 	private static final class FileConstraints {
 		static final boolean checkExists(final String filepath) {
 			if (! Files.exists(Paths.get( filepath ))) {
 				handleViolation( "File does not exist!" );
-				_log.error( "On attempt to import: file \"" + filepath + "\" does not exists!" );
+				_log.error(format(  "On attempt to import: file \"%s\" does not exists!" , filepath ));
 				return true;
 			}
 			return false;

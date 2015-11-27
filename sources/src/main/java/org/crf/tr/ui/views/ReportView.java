@@ -43,15 +43,14 @@ public abstract class ReportView extends VBox implements Viewable {
 		applyOnReportView( this );
 		buildHeaderSection(  this, _owner );
 		/// content section is in a scroll bar in case it would not fit ;)
-		this.getChildren().add(asScrollable(buildContentSection( this, _owner )));
+		this.getChildren().add(asScrollable(applyOn(buildContentSection( this, _owner ), "crf-report-view-contents", "crf-report-view-contents-commons" )));
 		buildCommentSection( this, _owner );
 		buildFooterSection( this, _owner );
 	}
 
 	static final ScrollPane asScrollable(final Pane content) {
 		final ScrollPane wrapper = new ScrollPane( content );
-		content.setMinHeight( 460 );
-		wrapper.setMinHeight(content.getMinHeight( ));
+		applyOn( wrapper, "crf-report-view-contents-commons" );
 		return wrapper;
 	}
 
@@ -77,10 +76,8 @@ public abstract class ReportView extends VBox implements Viewable {
 
 	static final void buildCommentSection(final ReportView view, final TestReporter owner) {
 		final TitledPane comments = new TitledPane( "Comments", view.commentArea( ));
-		comments.setMinHeight( 70 );
-		comments.setCollapsible( false );
+		applyOn( view.commentArea(), "crf-report-comments-area" );
 		applyOn( comments, "crf-report-view-comments-wrapper" );
-
 		view.getChildren().add( comments );
 	}
 
@@ -93,9 +90,9 @@ public abstract class ReportView extends VBox implements Viewable {
 			///ELABORATEME: DialogFactory.makeExportFor( view, owner );
 			_log.info( "Report exported.." );
 		});
-		export.setMinWidth( 130 );
 		export.setTooltip(new Tooltip( "Press to export to a PDF file." ));
 		footer.getChildren().add( export );
+		applyOn( export, "crf-report-view-export-btn" );
 		applyOn( footer, "crf-report-view-footer" );
 		view.getChildren().add( footer );
 	}

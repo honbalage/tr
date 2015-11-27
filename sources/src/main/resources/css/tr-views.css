@@ -1,10 +1,12 @@
 /**
  * tr-views.css
  */
+/* PROJECT */
 .crf-tr-center {
   -fx-background-color: white;
   -fx-background-image: url( "file:src/main/resources/images/bcg.jpg" );
   -fx-background-size: stretch;
+  -fx-scale-shape: true;
 }
 
 .crf-project-header {
@@ -21,8 +23,10 @@
   -fx-text-fill: #ffffff;
   -fx-font-size: 31;
 }
+/* EOF PROJECT */
 
 
+/* REPORT */
 .crf-report-view-header {
   -fx-background-color: deepskyblue;
 }
@@ -37,10 +41,31 @@
   -fx-font-size: 13;
 }
 
-.crf-report-view-comments-wrapper {
+
+
+.crf-report-view-contents-commons {
+  -fx-min-height: 410;
+  -fx-pref-height: 1180;
+  -fx-scale-shape: true;
+  -fx-fit-to-height: true;
+}
+
+
+
+.crf-report-comments-area {
+  -fx-min-height:  80;
+  -fx-pref-height: 80;
+  -fx-scale-shape: false;
+}
+
+.crf-report-view-comments-wrapper { /* TitledPane */
+  -fx-scale-shape: false;
   -fx-text-fill: white;
   -fx-font-size: 13;
   -fx-font-weight: bold;
+  -fx-min-height: 110;
+  -fx-pref-height: 110;
+  -fx-collapsible: false;
 }
 
 .crf-report-view-comments-wrapper > .title {
@@ -55,11 +80,18 @@
 }
 
 .crf-report-view {
-  -fx-min-height: 830;
+  -fx-min-height: 670;
+  -fx-pref-width: 730;
 }
 
+.crf-report-view-export-btn {
+  -fx-min-width: 130;
+}
+/* EOF REPORT */
+
+
+/* AGGREGATE(S) */
 .crf-trends-view {
-  -fx-min-width: 650;
 }
 
 .crf-trends-view-header {
@@ -67,11 +99,26 @@
   -fx-min-height: 50;
 }
 
-.crf-charts-view-holder {
-
+.crf-aggregate-views-holder {
+  -fx-min-height: 670;
+  -fx-pref-height: 1180;
+  -fx-pref-width: 1280;
 }
 
-.crf-trends-view-chart {
-  -fx-min-width: 700;
+
+.crf-aggregate-view-commons {
+  -fx-fit-to-width: true;
 }
 
+.crf-aggregate-view {
+  -fx-min-height: 335;
+  -fx-min-width: 670;
+  -fx-pref-width: 1260;
+}
+
+.crf-aggregate-view-chart {
+  -fx-min-width: 600;
+  -fx-pref-width: 1200;
+  -fx-min-height: 280;
+}
+/* EOF AGGREGATE(S) */

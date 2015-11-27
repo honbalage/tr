@@ -28,6 +28,7 @@ public abstract class AggregateView <C extends Chart> extends VBox implements Vi
 	private final void initWidgets() {
 		applyCommons( this );
 		applyOn( this, "crf-aggregate-view" );
+		applyOn( this._aggregateChart, "crf-aggregate-view-chart" );
 		buildHeaderSection( );
 		buildContentSection( );
 		buildFooterSection( );
@@ -35,6 +36,7 @@ public abstract class AggregateView <C extends Chart> extends VBox implements Vi
 
 	protected abstract void buildHeaderSection();
 	protected abstract void buildContentSection();
+
 	protected void buildFooterSection() {
 	}
 

@@ -54,11 +54,11 @@ public final class DefaultViewBuilder {
 			children.add( _reportView );
 	
 			final VBox aggregatesHolder = new VBox();
-			applyOn( aggregatesHolder, "crf-charts-view-holder" );
+			applyOn( aggregatesHolder, "crf-aggregate-views-holder" );
 	        aggregatesHolder.getChildren().addAll( _aggregateViews );
 			children.add( aggregatesHolder );
 		}
-	
+
 		private final TestReporter _owner;
 		private final ReportView _reportView;
 		private final List<A> _aggregateViews;
