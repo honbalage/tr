@@ -1,32 +1,10 @@
-
+/**
+ * tr-views.css
+ */
 .crf-tr-center {
   -fx-background-color: white;
   -fx-background-image: url( "file:src/main/resources/images/bcg.jpg" );
   -fx-background-size: stretch;
-}
-
-.crf-button {
-  -fx-border-color: deepskyblue; 
-  -fx-border-width: 2; 
-  -fx-text-fill: lightseagreen; 
-  -fx-font-size: 16;
-  -fx-font-weight: bold;
-  -fx-background-color: white;
-}
-
-.crf-button:hover {
-  -fx-text-fill: lightseagreen;
-  -fx-border-color: lightseagreen; 
-  -fx-background-color: aliceblue;
-}
-
-
-.crf-commons {
-  -fx-min-width: 600;
-  -fx-border-color: deepskyblue;
-  -fx-border-width: 3;
-  -fx-background-color: white;
-  -fx-effect: dropshadow( gaussian, dimgray, 10, 0.1, 1, 1 );
 }
 
 .crf-project-header {
@@ -76,12 +54,17 @@
   -fx-border-width: 1;
 }
 
+.crf-report-view {
+  -fx-min-height: 830;
+}
+
 .crf-trends-view {
-  -fx-min-width: 700;
+  -fx-min-width: 650;
 }
 
 .crf-trends-view-header {
-  -fx-min-height: 77;
+  -fx-background-color: deepskyblue;
+  -fx-min-height: 50;
 }
 
 .crf-charts-view-holder {
@@ -89,6 +72,6 @@
 }
 
 .crf-trends-view-chart {
-  -fx-min-width: 670;
+  -fx-min-width: 700;
 }
 

@@ -27,7 +27,7 @@ public final class TestsTrendsBuilder {
 		final XYChart.Series<Number, Number> successTrend = new XYChart.Series<>( );
 		final XYChart.Series<Number, Number> failTrend = new XYChart.Series<>( );
 		successTrend.setName( "Success" );
-		successTrend.setName( "Fail" );
+		failTrend.setName( "Fail" );
 		for( int i = 0; i < 100; ++i ) {
 			successTrend.getData().add(new XYChart.Data<Number, Number>( 2*i, i ));
 			failTrend.getData().add(new XYChart.Data<Number, Number>( 100-2*i, 100-i ));
