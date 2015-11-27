@@ -68,7 +68,7 @@ public final class TestReporter extends Application {
 		primary.setScene( mainScene );
 
 		///TODONE: remove
-		setupTestProject( this );
+//		setupTestProject( this );
 		primary.show( );
 	}
 
