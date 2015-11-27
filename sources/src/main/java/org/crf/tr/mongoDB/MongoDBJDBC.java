@@ -9,6 +9,7 @@ import java.util.Date;
 
 
 
+
 import org.crf.tr.model.Project;
 import org.crf.tr.model.Project.TestFramework;
 import org.crf.tr.parser.Parser;
@@ -33,6 +34,7 @@ import org.bson.Document;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Sorts.ascending;
 import static java.util.Arrays.asList;
+
 
 
 import org.bson.Document;
@@ -90,9 +92,7 @@ public class MongoDBJDBC {
         return docBuilder.get();
     }
 
-	public static String getProjectDBObject(String name, String date) {
-		String retString = null;
-		Document ret;
+	public static String getProjectByDate(String name, String date) {
 		FindIterable<Document> iterable = db.getCollection("projects").find(
 		        new Document("date", new Document("$lt", date)).append("name", name));
 		
@@ -108,34 +108,15 @@ public class MongoDBJDBC {
 //		return retString;
 	}
  
-	
-	public static DB connectToDB(String URL, int Port){
-		DB db = null;
-		try{
-			
-			mongo = new MongoClient( URL, Port );
-			db = mongo.getDB("tr");
-			
-			_log.debug("Connected to mongoDB successfully");
-
-		}catch(Exception e){
-			_log.error( e.getClass().getName() + ": " + e.getMessage() );
-		}
-		return db;
+	public static String getProjectByID(String id) {
+		FindIterable<Document> iterable = db.getCollection("projects").find(
+		        new Document("_id", id));
+		
+		return iterable.first().toJson();
 	}
 	
-	
-	public static DBCollection getCollection(DB db, String coll){
-		DBCollection collection = null;
-		try{
-			
-			 collection = db.getCollection(coll);
-	         _log.debug("Collection " + coll + " selected successfully");
-	         
-		}catch(Exception e){
-			_log.error( e.getClass().getName() + ": " + e.getMessage() );
-		}
-		return collection;
+	public static void removeProjectByID(String id) {
+		db.getCollection("projects").replaceOne(new Document("_id", id),	new Document());
 	}
 	
 	public static WriteResult insertCollection(DBCollection coll, DBObject obj){
@@ -159,6 +140,8 @@ public class MongoDBJDBC {
 			_log.error( e.getClass().getName() + ": " + e.getMessage() );
 		}
 	}
+
+
 
 
 

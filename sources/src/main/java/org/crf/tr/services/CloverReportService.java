@@ -36,8 +36,12 @@ public class CloverReportService {
 		}		
 	}
 	
-	public static CloverReport getProjectFromMongo(String name, String date){
-		return parseMongoProject( MongoDBJDBC.getProjectDBObject(name, date) );
+	public static CloverReport getProjectByIDFromMongo(String id){
+		return parseMongoProject( MongoDBJDBC.getProjectByID(id) );
+	}
+	
+	public static CloverReport getProjectByDateFromMongo(String name, String date){
+		return parseMongoProject( MongoDBJDBC.getProjectByDate(name, date) );
 	}
 	
 	public static CloverReport parseMongoProject(String p){
@@ -99,6 +103,7 @@ public class CloverReportService {
 					}
 					project.setPackages(packages);
 					report.setProject(project);
+					_log.info(project.toString());
 				}
 				return new CloverReport(report);
 			} catch (ParseException | NullPointerException e) {

@@ -4,6 +4,7 @@
 package org.crf.tr.services.factories;
 
 import org.crf.tr.services.BoostReportService;
+import org.crf.tr.services.CloverReportService;
 import org.crf.tr.services.ProjectService;
 
 /**
@@ -19,5 +20,9 @@ public final class Services {
 	
 	public static final BoostReportService makeForBoostReports() {
 		return new BoostReportService();
+	}
+	
+	public static final CloverReportService makeForCloverReports() {
+		return new CloverReportService();
 	}
 }
