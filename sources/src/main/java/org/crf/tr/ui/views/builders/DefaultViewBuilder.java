@@ -6,13 +6,20 @@ package org.crf.tr.ui.views.builders;
 
 
 import static org.crf.tr.ui.views.Styles.applyOn;
-import org.crf.tr.ui.views.TestsTrendView;
+
+import org.crf.tr.ui.views.CoverageView;
+import org.crf.tr.ui.views.TrendsView;
 import org.crf.tr.ui.views.ReportView;
+
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 import org.crf.tr.TestReporter;
+
 import java.util.ArrayList;
+
 import javafx.scene.Node;
+
 import java.util.List;
 
 
@@ -24,7 +31,8 @@ import java.util.List;
 public final class DefaultViewBuilder {
 	public static final void buildFor(final TestReporter owner, final ReportView reportView) {
 		DefaultViewBuilder.<Node>makeFor( owner, reportView )
-		                  .addAggregate(new TestsTrendView( owner ))
+		                  .addAggregate(new TrendsView( owner ))
+		                  .addAggregate(new CoverageView( owner ))
 		                  .build( );
 	}
 

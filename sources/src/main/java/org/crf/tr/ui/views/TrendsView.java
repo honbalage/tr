@@ -7,7 +7,7 @@ package org.crf.tr.ui.views;
 import static org.crf.tr.ui.views.Styles.applyOn;
 
 import org.crf.tr.TestReporter;
-import org.crf.tr.ui.views.builders.TestsTrendsBuilder;
+import org.crf.tr.ui.views.builders.ChartsBuilder;
 
 import javafx.scene.chart.AreaChart;
 import javafx.scene.layout.HBox;
@@ -17,9 +17,9 @@ import javafx.scene.layout.HBox;
  * @author cvirtue
  * @version "%I, %G"
  */
-public final class TestsTrendView extends AggregateView<AreaChart<Number, Number>> {
+public final class TrendsView extends AggregateView<AreaChart<Number, Number>> {
 
-	public TestsTrendView(final TestReporter owner) {
+	public TrendsView(final TestReporter owner) {
 		super( owner );
 	}
 
@@ -41,6 +41,6 @@ public final class TestsTrendView extends AggregateView<AreaChart<Number, Number
 
 	@Override
 	protected final AreaChart<Number, Number> makeChart(final TestReporter owner) {
-		return TestsTrendsBuilder.makeDefault( owner );
+		return ChartsBuilder.buildTrendsMockFor( owner );
 	}
 }

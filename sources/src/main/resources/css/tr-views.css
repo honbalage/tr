@@ -103,6 +103,7 @@
   -fx-min-height: 670;
   -fx-pref-height: 1180;
   -fx-pref-width: 1280;
+  -fx-spacing: 7;
 }
 
 
@@ -119,6 +120,6 @@
 .crf-aggregate-view-chart {
   -fx-min-width: 600;
   -fx-pref-width: 1200;
-  -fx-min-height: 280;
+  -fx-min-height: 230;
 }
 /* EOF AGGREGATE(S) */
