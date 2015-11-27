@@ -1,3 +1,7 @@
 {
+ "db-home": ".db"
+,"db-log-dir": "log" 
+,"db-staging-dir": ".staging"
+,"db-name": "trdb"
 }
 

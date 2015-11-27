@@ -6,4 +6,4 @@ target
 *.settings
 *.swp
 *.classpath
-
+*.db

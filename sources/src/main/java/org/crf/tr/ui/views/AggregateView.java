@@ -7,7 +7,9 @@ package org.crf.tr.ui.views;
 import static org.crf.tr.ui.views.Styles.applyCommons;
 import static org.crf.tr.ui.views.Styles.applyOn;
 import javafx.scene.chart.Chart;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 import org.crf.tr.TestReporter;
 
 
@@ -34,8 +36,15 @@ public abstract class AggregateView <C extends Chart> extends VBox implements Vi
 		buildFooterSection( );
 	}
 
-	protected abstract void buildHeaderSection();
-	protected abstract void buildContentSection();
+	protected void buildHeaderSection() {
+    	final HBox header = new HBox( );
+    	applyOn( header, "crf-trends-view-header" );
+    	getChildren().add( header );
+	}
+
+	protected void buildContentSection() {
+    	getChildren().add(chart( ));
+	}
 
 	protected void buildFooterSection() {
 	}

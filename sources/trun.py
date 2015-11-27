@@ -2,7 +2,10 @@
 # trun
 from argparse import ArgumentParser
 from os.path import realpath
+from shutil import rmtree
+from os.path import isdir
 import subprocess as sp
+from os import mkdir
 import json
 import sys
 import os
@@ -54,11 +57,38 @@ def runInJVM(jar, config):
   liveStream( cmd )
 
 
+def logAll(*args):
+  for arg in args:
+    print '[INFO] %s' % arg
+
+
+def makeNonExistent(*dirs):
+  for d in (dr for dr in dirs if not(isdir( dr ))):
+    logAll( 'making \'%s\'' % d )
+    mkdir( d )
+    assert isdir( d )
+
+
+def startupDB(args, config):
+  db_home = realpath(config[ 'db-home' ])
+  log_dir = config['db-log-dir']
+  db_name = config['db-name']
+  db_log_dir = '/'.join([ db_home, log_dir ])
+  db_log = '/'.join([ db_log_dir, '%s.log' % db_name ])
+  db = '/'.join([ db_home, db_name ])
+  staging_dir = config['db-staging-dir']
+  db_staging = '/'.join([ db_home, staging_dir ])
+  makeNonExistent( db_home, db_log_dir, db_staging )
+  #if not(isfile( db )): installDB( ... )
+  rmtree( db_staging )
+
+
 def main(argc, argv):
   args = argumentsOf(argv[ 1: ])
   config = configOf( args )
   jar_path = makeNonExistentJar( args, config ) 
   if not( args.build ):
+    startupDB( args, config )
     runInJVM( jar_path, config )
 
 
