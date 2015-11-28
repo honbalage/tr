@@ -14,6 +14,11 @@ import os
 _targetdir = 'target'
 _runnable_jar_home = '%s/bin' % _targetdir
 
+def logAll(*args):
+  for arg in args:
+    print '[INFO] %s' % arg
+
+
 def liveStream(command):
   proc = sp.Popen( command, stdout=sp.PIPE )
   while True:
@@ -49,6 +54,8 @@ def makeNonExistentJar(args, config):
 
   maven = [ 'mvn', 'compile', 'assembly:single' ]
   liveStream( maven )
+  maven_test = [ 'mvn', 'test' ]
+  liveStream( maven_test )
   return jar_path
 
 
@@ -56,10 +63,6 @@ def runInJVM(jar, config):
   cmd = [ 'java', '-jar', jar, '>&0' ]
   liveStream( cmd )
 
-
-def logAll(*args):
-  for arg in args:
-    print '[INFO] %s' % arg
 
 
 def makeNonExistent(*dirs):
