@@ -46,7 +46,7 @@ public final class ImportTestOutputBuilder {
 
 		 final Dialog<File> dialog = new Dialog<>( );
 		 dialog.setTitle( "Import File" );
-		 dialog.setHeaderText(format( "Choose the latest test output for project %s." , owner.currentProject().name( )));
+		 dialog.setHeaderText(format( "Choose the latest test output for project %s." , owner.currentProject().get( ).name( )));
 		 
 		 final TextField filepathField = new TextField( );
 		 final Pane content = makeContentPane( owner, filepathField );
@@ -102,8 +102,8 @@ public final class ImportTestOutputBuilder {
 
 
 	private static final class ProjectConstraints {
-		static final boolean checkNull(final Project current) {
-			if( current == null ) {
+		static final boolean checkNull(final Optional<Project> current) {
+			if( current == null || (! current.isPresent( ))) {
 				final Alert alert = new Alert( AlertType.ERROR );
 				alert.setTitle( "No Project" );
 				alert.setHeaderText( "Currently there is no project selected yet." );

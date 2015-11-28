@@ -18,7 +18,7 @@ public final class CloverViewBuilder implements ViewBuilder {
 	@Override
 	public void buildViewsFor(final TestReporter owner) {
 		_log.info( "Building view for clover.." ); //< TODONE: remove
-		DefaultViewBuilder.buildFor( owner, new CloverReportView( owner ));
+		Defaults.buildFor( owner, new CloverReportView( owner ));
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger( BoostViewBuilder.class );

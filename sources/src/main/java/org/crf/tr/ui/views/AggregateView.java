@@ -7,10 +7,12 @@ package org.crf.tr.ui.views;
 import static org.crf.tr.ui.views.Styles.applyCommons;
 import static org.crf.tr.ui.views.Styles.applyOn;
 import javafx.scene.chart.Chart;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 
 import org.crf.tr.TestReporter;
+import org.crf.tr.ui.views.builders.Defaults;
 
 
 /**
@@ -37,9 +39,13 @@ public abstract class AggregateView <C extends Chart> extends VBox implements Vi
 	}
 
 	protected void buildHeaderSection() {
-    	final HBox header = new HBox( );
-    	applyOn( header, "crf-trends-view-header" );
-    	getChildren().add( header );
+    	final ComboBox<String> datesBox = new ComboBox<>( );
+    	final Button refresh = new Button( "Refresh" );
+    	//ELABORATEME:
+    	Defaults.makeHeaderFor( this )
+    	                  .datesBox( datesBox )
+    	                  .refresh( refresh )
+    	                  .build( );
 	}
 
 	protected void buildContentSection() {
@@ -51,7 +57,6 @@ public abstract class AggregateView <C extends Chart> extends VBox implements Vi
 
 	@Override
 	public void refresh() {
-		// TODONE Auto-generated method stub		
 	}
 
 	protected abstract C makeChart(final TestReporter owner);

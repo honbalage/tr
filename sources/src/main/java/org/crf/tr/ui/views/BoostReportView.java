@@ -23,10 +23,17 @@ public final class BoostReportView extends ReportView {
 	}
 
 	@Override
-	protected final Pane buildContentSection(ReportView view, TestReporter owner) {
+	protected final Pane buildContentSection(final ReportView view,final TestReporter owner) {
 		final GridPane content = new GridPane( );
 		///ELABORATEME: setup content of the grid..
 		return content;
+	}
+
+	@Override
+	public final void refresh() {
+		//ELABORATEME:
+		//final Optional<BoostReport> report = _service.find( filepath );
+		//if (! report.isPresent()) return; // TODONE: handle errors :)
 	}
 
 	@Override

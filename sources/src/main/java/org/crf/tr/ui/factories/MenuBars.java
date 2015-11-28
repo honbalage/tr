@@ -72,7 +72,8 @@ public final class MenuBars {
 
 			final Optional<File> testOutput = dialog.get( ).showAndWait( );
 			if (! testOutput.isPresent()) return;
-			owner.process(Paths.get(testOutput.get( ).getAbsolutePath( )));
+
+			owner.latestPath(Paths.get(testOutput.get( ).getAbsolutePath( )));
 		});
 		importItem.setAccelerator(KeyCombination.keyCombination( "Ctrl+Shift+I" ));
 

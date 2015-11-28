@@ -5,22 +5,19 @@ package org.crf.tr.ui.views;
 
 import static org.crf.tr.ui.views.Styles.applyOnReportView;
 import static org.crf.tr.ui.views.Styles.applyOn;
-import java.nio.file.Path;
 
+import java.nio.file.Path;
 import org.crf.tr.TestReporter;
-import org.crf.tr.model.Project;
+import org.crf.tr.ui.views.builders.Defaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javafx.geometry.Insets;
-import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -55,19 +52,13 @@ public abstract class ReportView extends VBox implements Viewable {
 	}
 
 	static final void buildHeaderSection(final ReportView view, final TestReporter owner) {
-		final GridPane header = new GridPane( );
-		header.setHgap( 3 );
-		header.setVgap( 3 );
-		header.setPadding(new Insets( 4, 4, 7, 4 ));
-		final Project current = owner.currentProject();
-
-		header.add( applyOn(new Label( "Project: " ), "crf-report-view-header-label" ) , 1, 1 );
-		header.add( applyOn(new Label(current.name( )), "crf-report-view-header-text" ), 2, 1 );
-		header.add( applyOn(new Label( "Test FW: " ), "crf-report-view-header-label" ), 1, 2 );
-		header.add( applyOn(new Label(current.framework().toString( )), "crf-report-view-header-text" ), 2, 2 );
-
-		applyOn( header, "crf-report-view-header" );
-		view.getChildren().add( header );
+		final ComboBox<String> datesBox = new ComboBox<>( );
+		final Button refresh = new Button( "Refresh" );
+		//ELABORATEME:
+		Defaults.makeHeaderFor( view )
+		                  .datesBox( datesBox )
+		                  .refresh( refresh )
+		                  .build();
 	}
 
 
@@ -83,8 +74,6 @@ public abstract class ReportView extends VBox implements Viewable {
 
 	static final void buildFooterSection(final ReportView view, final TestReporter owner) {
 		final HBox footer = new HBox( );
-		footer.setPadding(new Insets( 7, 13, 7, 7 ));
-		footer.setNodeOrientation( NodeOrientation.RIGHT_TO_LEFT );
 		final Button export = Styles.applyOn(new Button( "Export" ));
 		export.setOnAction( evt -> {
 			///ELABORATEME: DialogFactory.makeExportFor( view, owner );
@@ -93,14 +82,8 @@ public abstract class ReportView extends VBox implements Viewable {
 		export.setTooltip(new Tooltip( "Press to export to a PDF file." ));
 		footer.getChildren().add( export );
 		applyOn( export, "crf-report-view-export-btn" );
-		applyOn( footer, "crf-report-view-footer" );
+		applyOn( footer, "crf-refreshing-header" );
 		view.getChildren().add( footer );
-	}
-	
-	@Override
-	public final void refresh() {
-		///ELABORATEME:
-		_log.info( "View refreshed.." );
 	}
 
 	public final TestReporter owner() {

@@ -19,7 +19,7 @@ public final class BoostViewBuilder implements ViewBuilder {
 	@Override
 	public void buildViewsFor(final TestReporter owner) {
 		_log.info( "Building view for boost.." ); //< TODONE: remove
-		DefaultViewBuilder.buildFor( owner, new BoostReportView( owner ));
+		Defaults.buildFor( owner, new BoostReportView( owner ));
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger( BoostViewBuilder.class );

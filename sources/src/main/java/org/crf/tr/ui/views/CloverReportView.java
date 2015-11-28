@@ -30,6 +30,13 @@ public final class CloverReportView extends ReportView {
 	}
 
 	@Override
+	public final void refresh() {
+		//ELABORATEME:
+		//final Optional<CloverReport> report = _service.find( filepath );
+		//if (! report.isPresent()) return; // TODONE: handle errors :)
+	}
+
+	@Override
 	public final void export(final Path outputPdf) {
 		
 	}

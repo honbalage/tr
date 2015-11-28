@@ -4,6 +4,7 @@
 package org.crf.tr.ui.views;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.crf.tr.TestReporter;
 import org.crf.tr.model.Project;
@@ -28,10 +29,18 @@ public final class ProjectHeader extends HBox implements Viewable {
 	}
 
 	public static final ProjectHeader makeFor(final TestReporter owner) {
-		final Project project = owner.currentProject( );
 		final VBox center = owner.center();
-
 		final ProjectHeader header = Styles.applyOn(new ProjectHeader( ));
+		final List<Node> items = center.getChildren();
+		if (items.isEmpty())
+			items.add( 0, header );
+		else 
+			items.set( 0, header );
+		final Optional<Project> current = owner.currentProject( );
+		if (! current.isPresent( )) return header;
+		
+		final Project project = current.get( );
+
 		header.setPadding(new Insets( 7, 6, 7, 6 ));
 		header.setSpacing( 13 );
 		header.getChildren().add( 0, Images.get( "proj-icon.png", 42, 42 ));
@@ -39,19 +48,10 @@ public final class ProjectHeader extends HBox implements Viewable {
 		final Label l = new Label(format( "[%s]", project.framework().toString( )));
 		header.getChildren().add( 2, Styles.applyOn( l, "crf-project-fw-type-header-label" ));
 
-		final List<Node> items = center.getChildren();
-		if (items.isEmpty())
-			items.add( 0, header );
-		else 
-			items.set( 0, header );
 		return header;
 	}
 
-	ProjectHeader() {
+	ProjectHeader( ) {
 		super( );
-	}
-
-	@Override
-	public final void refresh() {
 	}
 }

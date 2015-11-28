@@ -26,11 +26,23 @@
 /* EOF PROJECT */
 
 
-/* REPORT */
-.crf-report-view-header {
-  -fx-background-color: deepskyblue;
+/* COMMON VIEW */
+.crf-refreshing-header {
+  -fx-border-color: lightgray;
+  -fx-border-width: 1;
+  -fx-padding: 7 13 7 7;
+  -fx-alignment: center-right;
+  -fx-spacing: 13;
 }
 
+.crf-dates-box { /* combo box */
+  -fx-min-width: 240;
+  -fx-min-height: 35; 
+}
+
+/* EOF COMMON VIEW*/
+
+/* REPORT */
 .crf-report-view-header-label {
   -fx-text-fill: white;
 }
@@ -74,11 +86,6 @@
   -fx-background-radius: 0;
 }
 
-.crf-report-view-footer {
-  -fx-border-color: lightgray;
-  -fx-border-width: 1;
-}
-
 .crf-report-view {
   -fx-min-height: 670;
   -fx-pref-width: 730;
@@ -94,9 +101,12 @@
 .crf-trends-view {
 }
 
-.crf-trends-view-header {
+.crf-aggregate-view-header {
   -fx-background-color: deepskyblue;
+  -fx-padding: 0 13 0 0; 
+  -fx-spacing: 13;
   -fx-min-height: 50;
+  -fx-alignment: center-right bottom-left;
 }
 
 .crf-aggregate-views-holder {
@@ -122,4 +132,6 @@
   -fx-pref-width: 1200;
   -fx-min-height: 230;
 }
+
 /* EOF AGGREGATE(S) */
+

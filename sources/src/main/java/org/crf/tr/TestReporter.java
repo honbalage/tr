@@ -5,6 +5,7 @@ package org.crf.tr;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 import org.crf.tr.model.Project;
 import org.crf.tr.mongoDB.MongoDBJDBC;
@@ -76,8 +77,9 @@ public final class TestReporter extends Application {
 	private static final void setupTestProject(final TestReporter tr) {
 		final Project p = new Project( "First", Project.TestFramework.valueOf( "Clover" ));
 		try {
+
 			Services.makeForProjects().store( p );
-		} catch (EntityAlreadyExistsException e) {
+		} catch (final EntityAlreadyExistsException e) {
 		}
 		tr.currentProject( p );
 		_log.debug( "Project " + p.toString() + " created." );
@@ -87,12 +89,12 @@ public final class TestReporter extends Application {
 		return this._primary;
 	}
 
-	public final Project currentProject() {
-		return _currentProject;
+	public final Optional<Project> currentProject() {
+		return _state.currentProject( );
 	}
 	
 	public final void currentProject(final Project project) {
-		this._currentProject = project;
+		this._state.currentProject(( project == null ) ? Optional.empty() : Optional.of( project ));
 		ProjectHeader.makeFor( this );
 		project.framework().viewBuilder().buildViewsFor( this );
 	}
@@ -113,7 +115,12 @@ public final class TestReporter extends Application {
 		return _height;
 	}
 
-	public final void process(final Path testOutput) {
+	public final Optional<Path> latestPath() {
+		return _state.latestPath( );
+	}
+
+	public final void latestPath(final Path testOutput) {
+		_state.latestPath(( testOutput == null ) ? Optional.empty() : Optional.of( testOutput ));
 		///ELABORATEME: for( view : views ) view->refresh( );
 		_log.info( "File \"" + testOutput.toString() + "\" opened." );
 	}
@@ -135,5 +142,35 @@ public final class TestReporter extends Application {
 	private HBox _container;
 	private Stage _primary;
 	private List<Viewable> _views;
-	private Project _currentProject;
+	private final State _state = new State( );
+
+
+	private static final class State {
+
+		public State() {
+			super( );
+			this._latestPath = Optional.empty();
+			this._currentProject = Optional.empty();
+		}
+
+		public final Optional<Path> latestPath() {
+			return _latestPath;
+		}
+
+		public final void latestPath(final Optional<Path> filepath) {
+			this._latestPath = filepath;
+		}
+
+		public final Optional<Project> currentProject() {
+			return _currentProject;
+		}
+
+		public final void currentProject(final Optional<Project> project) {
+			this._currentProject = project;
+		}
+
+
+		private Optional<Path> _latestPath;
+		private Optional<Project> _currentProject;
+	}
 }
